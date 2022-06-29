@@ -34,6 +34,8 @@ export class EmployeeDashboardComponent implements OnInit {
     this.api.postEmployee(this.employeeModelObj).subscribe((res) => {
       console.log(res);
       alert('employee added successfully');
+    },err=>{
+      alert("something went wrong")
     });
   }
 }

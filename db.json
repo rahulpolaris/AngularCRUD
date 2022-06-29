@@ -4,6 +4,14 @@
       "id": 1,
       "title": "json-server",
       "author": "typicode"
+    },
+    {
+      "id": 2,
+      "firstName": "test name",
+      "lastName": "test last name",
+      "email": "test@mail.com",
+      "phone": 0,
+      "ctc": "10000000000"
     }
   ],
   "comments": [
