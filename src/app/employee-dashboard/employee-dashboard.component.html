@@ -2,7 +2,7 @@
     <div class="container-fluid">
         <h1> CRUD</h1>
         <div class="d-flex">
-            <button class="btn btn-success" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">Add
+            <button (click)="clickAddEmployee()" class="btn btn-success" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">Add
                 user</button>
         </div>
     </div>
@@ -21,14 +21,17 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let row of employeeData" >
+        <tr *ngFor="let row of employeeData">
             <td>{{row.id}}</td>
             <td>{{row.firstName}}</td>
             <td>{{row.lastName}}</td>
             <td>{{row.email}}</td>
             <td>{{row.phone}}</td>
             <td>{{row.ctc}}</td>
-            <td><button class="btn btn-warning">Edit</button><button class="btn btn-danger">Delete</button></td>
+            <td><button (click)="onEdit(row)"  class="btn btn-warning" type="button" data-bs-toggle="modal"
+                    data-bs-target="#exampleModal">Edit</button>
+                <button class="btn btn-danger" (click)="deleteEmployee(row)">Delete</button>
+            </td>
         </tr>
     </tbody>
 </table>
@@ -43,7 +46,7 @@
                 <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
             </div>
             <div class="modal-body">
-                <form [formGroup]="formValue" >
+                <form [formGroup]="formValue">
                     <div class="mb-3">
                         <label for="firstName" class="form-label">First Name</label>
                         <input type="text" class="form-control" id="FirstName" aria-describedby="emailHelp"
@@ -73,7 +76,8 @@
             </div>
             <div class="modal-footer">
                 <button type="button" id="closebutton" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" (click)="postEmployeeDetail()">Add</button>
+                <button type="button" *ngIf="showAdd" class="btn btn-primary" (click)="postEmployeeDetail()">Add</button>
+                <button type="button" *ngIf="showUpdate" class="btn btn-primary" (click)="onUpdateEmployee()">update</button>
             </div>
         </div>
     </div>
