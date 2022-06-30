@@ -11,6 +11,7 @@ import { ApiService } from '../shared/api.service';
 export class EmployeeDashboardComponent implements OnInit {
   formValue!: FormGroup;
   employeeModelObj: EmployeeModel = new EmployeeModel();
+  employeeData !: any
 
   constructor(private formbuilder: FormBuilder, private api: ApiService) {}
 
@@ -22,6 +23,7 @@ export class EmployeeDashboardComponent implements OnInit {
       phone: [''],
       ctc: [''],
     });
+    this.getAllEmployee()
   }
 
   postEmployeeDetail() {
@@ -34,8 +36,19 @@ export class EmployeeDashboardComponent implements OnInit {
     this.api.postEmployee(this.employeeModelObj).subscribe((res) => {
       console.log(res);
       alert('employee added successfully');
+      let ref = document.getElementById("closebutton")
+      ref?.click();
+      this.formValue.reset()
+      this.getAllEmployee()
     },err=>{
       alert("something went wrong")
     });
+  }
+  getAllEmployee(){
+    this.api.getEmployee().subscribe(res=>{
+      this.employeeData = res;
+
+    })
+
   }
 }

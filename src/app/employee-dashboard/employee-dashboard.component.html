@@ -21,13 +21,13 @@
         </tr>
     </thead>
     <tbody>
-        <tr>
-            <td>1</td>
-            <td>Rahul</td>
-            <td>Kumar</td>
-            <td>rahul@gmail.com</td>
-            <td>545648223</td>
-            <td>1000000</td>
+        <tr *ngFor="let row of employeeData" >
+            <td>{{row.id}}</td>
+            <td>{{row.firstName}}</td>
+            <td>{{row.lastName}}</td>
+            <td>{{row.email}}</td>
+            <td>{{row.phone}}</td>
+            <td>{{row.ctc}}</td>
             <td><button class="btn btn-warning">Edit</button><button class="btn btn-danger">Delete</button></td>
         </tr>
     </tbody>
@@ -40,7 +40,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Employee Detail</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
             </div>
             <div class="modal-body">
                 <form [formGroup]="formValue" >
@@ -67,12 +67,12 @@
                         <label for="CTC" class="form-label">CTC</label>
                         <input type="text" class="form-control" id="CTC" formControlName="ctc">
                     </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
                 </form>
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" id="closebutton" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-primary" (click)="postEmployeeDetail()">Add</button>
             </div>
         </div>
