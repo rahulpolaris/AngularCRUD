@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { EmployeeModel } from './employee-dashboard.model';
 import { ApiService } from '../shared/api.service';
 
@@ -14,6 +14,7 @@ export class EmployeeDashboardComponent implements OnInit {
   employeeData!: any;
   showAdd! : boolean;
   showUpdate! : boolean;
+  emailValidated!: boolean;
 
   constructor(private formbuilder: FormBuilder, private api: ApiService) {}
 
@@ -24,10 +25,12 @@ export class EmployeeDashboardComponent implements OnInit {
       firstName: [''],
       lastName: [''],
       email: [''],
+      // email: ['',Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")],
       phone: [''],
       ctc: [''],
     });
     this.getAllEmployee();
+    this.formValue.controls["email"].setValidators([Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]);
   }
   clickAddEmployee(){
     this.formValue.reset()

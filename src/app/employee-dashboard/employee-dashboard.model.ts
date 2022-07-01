@@ -5,4 +5,6 @@ export class EmployeeModel {
     email:string = '';
     phone:string=''
     ctc:string = '';
+    // age:string = '';
+    // address:any = ''
 }
