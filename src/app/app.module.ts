@@ -7,12 +7,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EmployeeDashboardComponent } from './employee-dashboard/employee-dashboard.component';
 import { HttpClientModule } from '@angular/common/http';
 import { InputnumberDirective } from './shared/inputnumber.directive';
+import { AgeValidationDirective } from './shared/age-validation.directive';
 
 @NgModule({
   declarations: [
     AppComponent,
     EmployeeDashboardComponent,
-    InputnumberDirective
+    InputnumberDirective,
+    AgeValidationDirective
   ],
   imports: [
     BrowserModule,

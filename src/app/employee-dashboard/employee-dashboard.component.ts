@@ -5,7 +5,14 @@ import {
   OnInit,
   SimpleChanges,
 } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+  AbstractControl,
+  ValidatorFn,
+  ValidationErrors,
+} from '@angular/forms';
 import { EmployeeModel } from './employee-dashboard.model';
 import { ApiService } from '../shared/api.service';
 
@@ -34,20 +41,19 @@ export class EmployeeDashboardComponent implements OnInit, OnChanges {
       lastName: [''],
       email: [''],
       // email: ['',Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")],
-      phone: ['',Validators.minLength(10)],
+      phone: [''],
       age: [''],
     });
-    this.detectingFormChanges();
     this.getAllEmployee();
     this.formValue.controls['email'].setValidators([
       Validators.required,
       Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
     ]);
     this.formValue.controls['phone'].setValidators([
-      // Validators.maxLength(10),
       Validators.minLength(10),
       Validators.required,
     ]);
+    this.formValue.controls['age'].setValidators([]);
   }
   ngOnChanges(changes: SimpleChanges): void {
     console.log(changes);
@@ -127,14 +133,17 @@ export class EmployeeDashboardComponent implements OnInit, OnChanges {
         this.getAllEmployee();
       });
   }
-  detectingFormChanges(): void {
-    // this.formValue.get('phone')?.valueChanges.subscribe((val) => {
-    //   let valStr: string = val.toString();
-    //   console.log(valStr, valStr.length);
-    //   if (valStr.length > 10) {
-    //     console.log('length exceeded', valStr.slice(0, 10));
-    //     this.formValue.value.phone = valStr.slice(0, 10);
-    //   }
-    // });
+  private customAgeValidation(controlAgeName:string): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const formGroup =  control as FormGroup
+      const valueOfAge = formGroup.get(controlAgeName)?.value
+      if (parseInt(valueOfAge)>10 && parseInt(valueOfAge)<120) {
+        return null;
+      } else {
+        return  {
+          wrongAge: true
+        }
+      }
+    };
   }
 }

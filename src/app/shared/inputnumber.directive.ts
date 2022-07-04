@@ -13,7 +13,7 @@ import {
 export class InputnumberDirective implements OnInit {
   // @HostBinding('value') inputValue!: string
   @HostListener('keypress', ['$event']) OnKeyPress(e: any):boolean {
-    if (
+    if ( 
       this.numberRowKeyCodes.includes(e.keyCode) ) {
       console.log('element key pressed', e);
       console.log('num input  detected',e.target.value);
