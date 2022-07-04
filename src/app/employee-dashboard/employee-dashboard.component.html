@@ -76,6 +76,9 @@
                     <div class="mb-3">
                         <label for="Age" class="form-label"  >Age</label>
                         <input type="number" class="form-control" id="Age" formControlName="age" appAgeValidation>
+                        <span class="text-danger" *ngIf="formValue.controls['age'].dirty && formValue.hasError('wrongAge')" >should be more than 10 years old</span>
+
+                        
                     </div>
                     {{formValue.valid}}
                     <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
