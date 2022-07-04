@@ -8,8 +8,8 @@ export class AgeValidationDirective implements OnInit {
 
   @HostListener('keypress', ['$event']) onAgePress(e:any): boolean {
     if (this.numberRowKeyCodes.includes(e.keyCode)) {
-      console.log('element key pressed', e);
-      console.log('num input  detected', typeof(e.target.value));
+      // console.log('element key pressed', e);
+      // console.log('num input  detected', typeof(e.target.value));
       if(e.target.value.length > 2)
       {
         return false

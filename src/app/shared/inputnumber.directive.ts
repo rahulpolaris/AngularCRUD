@@ -15,8 +15,8 @@ export class InputnumberDirective implements OnInit {
   @HostListener('keypress', ['$event']) OnKeyPress(e: any):boolean {
     if ( 
       this.numberRowKeyCodes.includes(e.keyCode) ) {
-      console.log('element key pressed', e);
-      console.log('num input  detected',e.target.value);
+      // console.log('element key pressed', e);
+      // console.log('num input  detected',e.target.value);
       if(e.target.value.length > 9)
       {
         return false

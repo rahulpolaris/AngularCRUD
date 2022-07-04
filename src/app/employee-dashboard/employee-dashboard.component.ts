@@ -43,6 +43,8 @@ export class EmployeeDashboardComponent implements OnInit, OnChanges {
       // email: ['',Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")],
       phone: [''],
       age: [''],
+    },{
+      validators : this.customAgeValidation('age')
     });
     this.getAllEmployee();
     this.formValue.controls['email'].setValidators([
@@ -53,7 +55,6 @@ export class EmployeeDashboardComponent implements OnInit, OnChanges {
       Validators.minLength(10),
       Validators.required,
     ]);
-    this.formValue.controls['age'].setValidators([]);
   }
   ngOnChanges(changes: SimpleChanges): void {
     console.log(changes);
@@ -137,7 +138,8 @@ export class EmployeeDashboardComponent implements OnInit, OnChanges {
     return (control: AbstractControl): ValidationErrors | null => {
       const formGroup =  control as FormGroup
       const valueOfAge = formGroup.get(controlAgeName)?.value
-      if (parseInt(valueOfAge)>10 && parseInt(valueOfAge)<120) {
+      console.log(valueOfAge)
+      if (parseFloat(valueOfAge)>10 && parseFloat(valueOfAge)<120) {
         return null;
       } else {
         return  {
