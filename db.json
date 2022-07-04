@@ -1,14 +1,5 @@
 {
-  "posts": [
-    {
-      "id": 1,
-      "firstName": "Rahul",
-      "lastName": "kumar",
-      "email": "thecalmandcoolrohan@gmail.com",
-      "phone": 9582558296,
-      "ctc": "50000"
-    }
-  ],
+  "posts": [],
   "comments": [],
   "profile": {
     "name": "typicode"

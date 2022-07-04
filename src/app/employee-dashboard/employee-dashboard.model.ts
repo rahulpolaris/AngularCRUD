@@ -4,7 +4,7 @@ export class EmployeeModel {
     lastName:string = '';
     email:string = '';
     phone:string=''
-    ctc:string = '';
+    age:string = '';
     // age:string = '';
     // address:any = ''
 }

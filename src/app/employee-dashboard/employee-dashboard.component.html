@@ -16,7 +16,7 @@
             <th scope="col">Last Name</th>
             <th scope="col">Email</th>
             <th scope="col">Phone</th>
-            <th scope="col">ctc</th>
+            <th scope="col">age</th>
             <th scope="col">action</th>
         </tr>
     </thead>
@@ -27,7 +27,7 @@
             <td>{{row.lastName}}</td>
             <td>{{row.email}}</td>
             <td>{{row.phone}}</td>
-            <td>{{row.ctc}}</td>
+            <td>{{row.age}}</td>
             <td><button (click)="onEdit(row)"  class="btn btn-warning" type="button" data-bs-toggle="modal"
                     data-bs-target="#exampleModal">Edit</button>
                 <button class="btn btn-danger" (click)="deleteEmployee(row)">Delete</button>
@@ -60,21 +60,28 @@
                         <label for="Email" class="form-label">Email</label>
                         <input type="email" class="form-control" id="Email" formControlName="email">
                         <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div><br>
-                        <span class="text-danger" *ngIf="formValue.controls['email'].dirty && formValue.hasError('required','email')" >Email ID is Required</span>
+                        <span class="text-danger" *ngIf="formValue.hasError('required','email')" >*Email ID is Required</span>
                         <span class="text-danger" *ngIf="formValue.controls['email'].dirty && formValue.hasError('pattern','email')" >not a valid email</span>
 
 
                     </div>
                     <div class="mb-3">
                         <label for="Phone" class="form-label">Phone</label>
-                        <input type="number" class="form-control" id="Phone" formControlName="phone">
+                        <input type="text" appInputnumber  class="form-control" id="Phone" formControlName="phone" >
+                        <span class="text-danger" *ngIf="formValue.hasError('required','phone')" >*phone number  is Required</span> <br>
+                        <span class="text-danger" *ngIf="formValue.controls['phone'].dirty && formValue.get('phone')?.errors" >should be at least 10 digits</span>
+
+
                     </div>
                     <div class="mb-3">
-                        <label for="CTC" class="form-label">CTC</label>
-                        <input type="text" class="form-control" id="CTC" formControlName="ctc">
+                        <label for="Age" class="form-label">Age</label>
+                        <input type="text" class="form-control" id="Age" formControlName="age">
                     </div>
                     <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
                 </form>
+                <!-- <form action="#">
+                    <input type="text" [(ngModel)]="testInput" name="testinput">
+                </form> -->
 
             </div>
             <div class="modal-footer">
