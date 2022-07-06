@@ -15,6 +15,7 @@ import {
 } from '@angular/forms';
 import { EmployeeModel } from './employee-dashboard.model';
 import { ApiService } from '../shared/api.service';
+import { CscapiService } from '../cscapi.service';
 
 @Component({
   selector: 'app-employee-dashboard',
@@ -29,13 +30,19 @@ export class EmployeeDashboardComponent implements OnInit, OnChanges {
   showUpdate!: boolean;
   emailValidated!: boolean;
   phoneInput!: string;
+  countries!: any[]
+  states!: any[]
+  cities!: any[]
+  
   // @Input() testInput!: string;
 
-  constructor(private formbuilder: FormBuilder, private api: ApiService) {}
+  constructor(private formbuilder: FormBuilder, private api: ApiService, private cscapi: CscapiService) {}
 
   ngOnInit(): void {
     this.showAdd = true;
     this.showUpdate = false;
+    this.countries = this.cscapi.countries
+    console.log(this.countries)
     this.formValue = this.formbuilder.group({
       firstName: [''],
       lastName: [''],
@@ -43,6 +50,8 @@ export class EmployeeDashboardComponent implements OnInit, OnChanges {
       // email: ['',Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")],
       phone: [''],
       age: [''],
+      countryname:[''],
+      statename:['']
     },{
       validators : this.customAgeValidation('age')
     });
@@ -147,5 +156,20 @@ export class EmployeeDashboardComponent implements OnInit, OnChanges {
         }
       }
     };
+  }
+  onCountryChange(event:any): void{
+    let countryObj = this.formValue.controls['countryname'].value
+    console.log(countryObj)
+    this.states = this.cscapi.getStates(countryObj.isoCode)
+    console.log(this.states)
+   
+  }
+  onStateChange(event:any): void{
+    let countryObjIsoCode = this.formValue.controls['countryname'].value.isoCode
+    let StateObjIsoCode = this.formValue.controls['statename'].value.isoCode
+    // console.log(countryObj)
+    this.cities = this.cscapi.getCities(countryObjIsoCode,StateObjIsoCode)
+    console.log(this.cities)
+   
   }
 }

@@ -2,7 +2,8 @@
     <div class="container-fluid">
         <h1> CRUD</h1>
         <div class="d-flex">
-            <button (click)="clickAddEmployee()" class="btn btn-success" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">Add
+            <button (click)="clickAddEmployee()" class="btn btn-success" type="button" data-bs-toggle="modal"
+                data-bs-target="#exampleModal">Add
                 user</button>
         </div>
     </div>
@@ -28,7 +29,7 @@
             <td>{{row.email}}</td>
             <td>{{row.phone}}</td>
             <td>{{row.age}}</td>
-            <td><button (click)="onEdit(row)"  class="btn btn-warning" type="button" data-bs-toggle="modal"
+            <td><button (click)="onEdit(row)" class="btn btn-warning" type="button" data-bs-toggle="modal"
                     data-bs-target="#exampleModal">Edit</button>
                 <button class="btn btn-danger" (click)="deleteEmployee(row)">Delete</button>
             </td>
@@ -60,27 +61,56 @@
                         <label for="Email" class="form-label">Email</label>
                         <input type="email" class="form-control" id="Email" formControlName="email">
                         <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div><br>
-                        <span class="text-danger" *ngIf="formValue.hasError('required','email')" >*Email ID is Required</span>
-                        <span class="text-danger" *ngIf="formValue.controls['email'].dirty && formValue.hasError('pattern','email')" >not a valid email</span>
+                        <span class="text-danger" *ngIf="formValue.hasError('required','email')">*Email ID is
+                            Required</span>
+                        <span class="text-danger"
+                            *ngIf="formValue.controls['email'].dirty && formValue.hasError('pattern','email')">not a
+                            valid email</span>
 
 
                     </div>
                     <div class="mb-3">
                         <label for="Phone" class="form-label">Phone</label>
-                        <input type="text" appInputnumber  class="form-control" id="Phone" formControlName="phone" >
-                        <span class="text-danger" *ngIf="formValue.hasError('required','phone')" >*phone number  is Required</span> <br>
-                        <span class="text-danger" *ngIf="formValue.controls['phone'].dirty && formValue.get('phone')?.errors" >should be at least 10 digits</span>
+                        <input type="text" appInputnumber class="form-control" id="Phone" formControlName="phone">
+                        <span class="text-danger" *ngIf="formValue.hasError('required','phone')">*phone number is
+                            Required</span> <br>
+                        <span class="text-danger"
+                            *ngIf="formValue.controls['phone'].dirty && formValue.get('phone')?.errors">should be at
+                            least 10 digits</span>
 
 
                     </div>
                     <div class="mb-3">
-                        <label for="Age" class="form-label"  >Age</label>
+                        <label for="Age" class="form-label">Age</label>
                         <input type="number" class="form-control" id="Age" formControlName="age" appAgeValidation>
-                        <span class="text-danger" *ngIf="formValue.controls['age'].dirty && formValue.hasError('wrongAge')" >should be more than 10 years old</span>
+                        <span class="text-danger"
+                            *ngIf="formValue.controls['age'].dirty && formValue.hasError('wrongAge')">cant be less than 10 and more than 120
+                            </span>
 
-                        
+
+                    </div>
+                    <div class="mb-3">
+                        <label for="countries" class="form-label">Choose a Country:</label>
+                        <select id="countries" name="countries" formControlName="countryname" (ngModelChange)="onCountryChange($event)"  class="form-control">
+                            <option *ngFor=" let country of countries" [ngValue]="country"  >{{country.name}}</option>
+                        </select><br>
+                    </div>
+                    <div class="mb-3">
+                        <label for="states" class="form-label">Choose a State:</label>
+                        <select id="states" name="states" formControlName="statename" (ngModelChange)="onStateChange($event)"  class="form-control">
+                            <option *ngFor=" let state of states" [ngValue]="state"  >{{state.name}}</option>
+                        </select><br>
+                    </div>
+                    <div class="mb-3">
+                        <label for="cities" class="form-label">Choose a City:</label>
+                        <select id="cities" name="cities" formControlName="cityname" (ngModelChange)="onStateChange($event)"  class="form-control">
+                            <option *ngFor=" let city of cities" [ngValue]="city"  >{{city.name}}</option>
+                        </select><br>
                     </div>
                     {{formValue.valid}}
+                    {{formValue.value.countryname.name}}
+
+
                     <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
                 </form>
                 <!-- <form action="#">
@@ -90,8 +120,10 @@
             </div>
             <div class="modal-footer">
                 <button type="button" id="closebutton" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" *ngIf="showAdd" class="btn btn-primary" [disabled]="!formValue.valid" (click)="postEmployeeDetail()">Add</button>
-                <button type="button" *ngIf="showUpdate" class="btn btn-primary" (click)="onUpdateEmployee()">update</button>
+                <button type="button" *ngIf="showAdd" class="btn btn-primary" [disabled]="!formValue.valid"
+                    (click)="postEmployeeDetail()">Add</button>
+                <button type="button" *ngIf="showUpdate" class="btn btn-primary"
+                    (click)="onUpdateEmployee()">update</button>
             </div>
         </div>
     </div>
