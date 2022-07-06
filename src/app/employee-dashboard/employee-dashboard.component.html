@@ -18,6 +18,9 @@
             <th scope="col">Email</th>
             <th scope="col">Phone</th>
             <th scope="col">age</th>
+            <th scope="col">Country</th>
+            <th scope="col">State</th>
+            <th scope="col">City</th>
             <th scope="col">action</th>
         </tr>
     </thead>
@@ -29,6 +32,9 @@
             <td>{{row.email}}</td>
             <td>{{row.phone}}</td>
             <td>{{row.age}}</td>
+            <td>{{row.countryname}}</td>
+            <td>{{row.statename}}</td>
+            <td>{{row.cityname}}</td>
             <td><button (click)="onEdit(row)" class="btn btn-warning" type="button" data-bs-toggle="modal"
                     data-bs-target="#exampleModal">Edit</button>
                 <button class="btn btn-danger" (click)="deleteEmployee(row)">Delete</button>
@@ -96,8 +102,8 @@
                         </select><br>
                     </div>
                     <div class="mb-3">
-                        <label for="states" class="form-label">Choose a State:</label>
-                        <select id="states" name="states" formControlName="statename" (ngModelChange)="onStateChange($event)"  class="form-control">
+                        <label for="states" class="form-label" >Choose a State:</label>
+                        <select id="states" [disabled]="true"  name="states" formControlName="statename" (ngModelChange)="onStateChange($event)"  class="form-control">
                             <option *ngFor=" let state of states" [ngValue]="state"  >{{state.name}}</option>
                         </select><br>
                     </div>
@@ -107,8 +113,6 @@
                             <option *ngFor=" let city of cities" [ngValue]="city"  >{{city.name}}</option>
                         </select><br>
                     </div>
-                    {{formValue.valid}}
-                    {{formValue.value.countryname.name}}
 
 
                     <!-- <button type="submit" class="btn btn-primary">Submit</button> -->

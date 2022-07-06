@@ -51,7 +51,8 @@ export class EmployeeDashboardComponent implements OnInit, OnChanges {
       phone: [''],
       age: [''],
       countryname:[''],
-      statename:['']
+      statename:[''],
+      cityname:['']
     },{
       validators : this.customAgeValidation('age')
     });
@@ -85,6 +86,9 @@ export class EmployeeDashboardComponent implements OnInit, OnChanges {
     this.employeeModelObj.email = this.formValue.value.email;
     this.employeeModelObj.phone = this.formValue.value.phone;
     this.employeeModelObj.age = this.formValue.value.age;
+    this.employeeModelObj.countryname = this.formValue.value.countryname.name;
+    this.employeeModelObj.statename = this.formValue.value.statename.name;
+    this.employeeModelObj.cityname = this.formValue.value.cityname.name;
 
     this.api.postEmployee(this.employeeModelObj).subscribe(
       (res) => {
@@ -103,6 +107,7 @@ export class EmployeeDashboardComponent implements OnInit, OnChanges {
   getAllEmployee() {
     this.api.getEmployee().subscribe((res) => {
       this.employeeData = res;
+      console.log(this.employeeData)
     });
   }
   deleteEmployee(row: any) {
@@ -125,6 +130,10 @@ export class EmployeeDashboardComponent implements OnInit, OnChanges {
     this.formValue.controls['email'].setValue(row.email);
     this.formValue.controls['phone'].setValue(row.phone);
     this.formValue.controls['age'].setValue(row.age);
+    this.formValue.controls['countryname'].setValue(row.countryname);
+    this.formValue.controls['statename'].setValue(row.statename);
+    this.formValue.controls['cityname'].setValue(row.cityname);
+    
   }
   onUpdateEmployee() {
     this.employeeModelObj.firstName = this.formValue.value.firstName;
@@ -132,6 +141,11 @@ export class EmployeeDashboardComponent implements OnInit, OnChanges {
     this.employeeModelObj.email = this.formValue.value.email;
     this.employeeModelObj.phone = this.formValue.value.phone;
     this.employeeModelObj.age = this.formValue.value.age;
+    this.employeeModelObj.countryname = this.formValue.value.countryname.name;
+    this.employeeModelObj.statename = this.formValue.value.statename.name;
+    this.employeeModelObj.cityname = this.formValue.value.cityname.name;
+
+    
 
     this.api
       .updateEmployee(this.employeeModelObj, this.employeeModelObj.id)
@@ -147,7 +161,7 @@ export class EmployeeDashboardComponent implements OnInit, OnChanges {
     return (control: AbstractControl): ValidationErrors | null => {
       const formGroup =  control as FormGroup
       const valueOfAge = formGroup.get(controlAgeName)?.value
-      console.log(valueOfAge)
+      // console.log(valueOfAge)
       if (parseFloat(valueOfAge)>10 && parseFloat(valueOfAge)<120) {
         return null;
       } else {
@@ -159,8 +173,9 @@ export class EmployeeDashboardComponent implements OnInit, OnChanges {
   }
   onCountryChange(event:any): void{
     let countryObj = this.formValue.controls['countryname'].value
-    console.log(countryObj)
+    // console.log(countryObj)
     this.states = this.cscapi.getStates(countryObj.isoCode)
+    this.cities = []
     console.log(this.states)
    
   }
@@ -169,7 +184,7 @@ export class EmployeeDashboardComponent implements OnInit, OnChanges {
     let StateObjIsoCode = this.formValue.controls['statename'].value.isoCode
     // console.log(countryObj)
     this.cities = this.cscapi.getCities(countryObjIsoCode,StateObjIsoCode)
-    console.log(this.cities)
+    // console.log(this.cities)
    
   }
 }
