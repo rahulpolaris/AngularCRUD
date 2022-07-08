@@ -1,12 +1,12 @@
 const express = require('express')
-const Countries = express.Router()
+const States = express.Router()
 const path = require('path')
 const connection = require('../resources/countriesSqlDb')
 
 
 
-Countries.get("/countries",async (req,res)=>{
-    connection.query('SELECT * FROM countries',(err,results,fields)=>{
+States.get("/states/:countryid",async (req,res)=>{
+    connection.query(`SELECT * FROM states WHERE country_id = ${req.params.countryid} `,(err,results,fields)=>{
         if(!err){
             console.log(results)
             console.log(fields)
@@ -21,4 +21,4 @@ Countries.get("/countries",async (req,res)=>{
     })
     
    })
-   module.exports = Countries
+   module.exports = States

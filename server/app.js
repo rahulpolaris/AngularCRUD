@@ -13,6 +13,7 @@ app.use(express.json());
 
 const HomeRoute = require("./routes/homeRoute");
 const Countries = require("./routes/countries");
+const States = require("./routes/states");
 
 
 
@@ -20,6 +21,7 @@ const Countries = require("./routes/countries");
 
 app.use("/",HomeRoute);
 app.use("/",Countries)
+app.use("/",States)
 
 app.listen(PORT, async () => {
     console.log("listening on port:" +  PORT+ "-----------------------------------------------------");
