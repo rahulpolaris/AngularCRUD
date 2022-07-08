@@ -1,17 +1,5 @@
 {
-  "posts": [
-    {
-      "id": 1,
-      "firstName": "rahul",
-      "lastName": "kumar",
-      "email": "thecalmandcoolrohan@gmail.com",
-      "phone": "9582558296",
-      "age": 27,
-      "countryname": "India",
-      "statename": "Madhya Pradesh",
-      "cityname": "Antri"
-    }
-  ],
+  "posts": [],
   "comments": [],
   "profile": {
     "name": "typicode"

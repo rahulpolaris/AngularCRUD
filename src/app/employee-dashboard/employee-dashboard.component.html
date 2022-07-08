@@ -97,19 +97,19 @@
                     </div>
                     <div class="mb-3">
                         <label for="countries" class="form-label">Choose a Country:</label>
-                        <select id="countries" name="countries" formControlName="countryname" (ngModelChange)="onCountryChange($event)"  class="form-control">
+                        <select id="countries" name="countries" formControlName="countryname" (change)="onCountryChange($event)"  class="form-control">
                             <option *ngFor=" let country of countries" [ngValue]="country"  >{{country.name}}</option>
                         </select><br>
                     </div>
                     <div class="mb-3">
                         <label for="states" class="form-label" >Choose a State:</label>
-                        <select id="states" [disabled]="true"  name="states" formControlName="statename" (ngModelChange)="onStateChange($event)"  class="form-control">
+                        <select id="states" [disabled]="true"  name="states" formControlName="statename" (change)="onStateChange($event)"  class="form-control">
                             <option *ngFor=" let state of states" [ngValue]="state"  >{{state.name}}</option>
                         </select><br>
                     </div>
                     <div class="mb-3">
                         <label for="cities" class="form-label">Choose a City:</label>
-                        <select id="cities" name="cities" formControlName="cityname" (ngModelChange)="onStateChange($event)"  class="form-control">
+                        <select id="cities" name="cities" formControlName="cityname" (change)="onStateChange($event)"  class="form-control">
                             <option *ngFor=" let city of cities" [ngValue]="city"  >{{city.name}}</option>
                         </select><br>
                     </div>
