@@ -30,7 +30,7 @@ export class EmployeeDashboardComponent implements OnInit, OnChanges {
   showUpdate!: boolean;
   emailValidated!: boolean;
   phoneInput!: string;
-  countries!: any[]
+  countries!: any
   states!: any[]
   cities!: any[]
   
@@ -41,7 +41,7 @@ export class EmployeeDashboardComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     this.showAdd = true;
     this.showUpdate = false;
-    this.countries = this.cscapi.countries
+    // this.countries = this.cscapi.getCountries()
     console.log(this.countries)
     this.formValue = this.formbuilder.group({
       firstName: [''],
@@ -57,6 +57,7 @@ export class EmployeeDashboardComponent implements OnInit, OnChanges {
       validators : this.customAgeValidation('age')
     });
     this.getAllEmployee();
+    this.getCountries()
     this.formValue.controls['email'].setValidators([
       Validators.required,
       Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
@@ -73,6 +74,7 @@ export class EmployeeDashboardComponent implements OnInit, OnChanges {
     this.formValue.reset();
     this.showAdd = true;
     this.showUpdate = false;
+    this.getCountries()
   }
   clickUpdateEmployee() {
     // this.formValue.reset()
@@ -103,6 +105,29 @@ export class EmployeeDashboardComponent implements OnInit, OnChanges {
         alert('something went wrong');
       }
     );
+  }
+  getCountries(){
+    this.cscapi.getCountries(null).subscribe((res)=>{
+      this.countries = res;
+      console.log(this.countries)
+    },err =>{
+      console.log(err)
+    })
+  }
+  getStates(arg:number){
+    this.cscapi.getStates(arg).subscribe((res)=>{
+      // console.log(res)
+      this.states = res
+    },err => {
+      console.log(err)
+    })
+  }
+  getCities(arg:number){
+    this.cscapi.getCities(arg).subscribe((res)=>{
+    this.cities = res
+    },err => {
+      console.log(err)
+    })
   }
   getAllEmployee() {
     this.api.getEmployee().subscribe((res) => {
@@ -174,17 +199,15 @@ export class EmployeeDashboardComponent implements OnInit, OnChanges {
   onCountryChange(event:any): void{
     let countryObj = this.formValue.controls['countryname'].value
     // console.log(countryObj)
-    this.states = this.cscapi.getStates(countryObj.isoCode)
-    this.cities = []
+this.getStates(countryObj.id)
+    // this.cities = []
     console.log(this.states)
    
   }
   onStateChange(event:any): void{
-    let countryObjIsoCode = this.formValue.controls['countryname'].value.isoCode
-    let StateObjIsoCode = this.formValue.controls['statename'].value.isoCode
-    // console.log(countryObj)
-    this.cities = this.cscapi.getCities(countryObjIsoCode,StateObjIsoCode)
-    // console.log(this.cities)
-   
+    // let countryObjIsoCode = this.formValue.controls['countryname'].value.isoCode
+    let StateObjIsoCode = this.formValue.controls['statename'].value.id
+    console.log("State id is: ",StateObjIsoCode)
+   this.getCities(StateObjIsoCode)
   }
 }

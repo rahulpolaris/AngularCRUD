@@ -1,5 +1,17 @@
 {
-  "posts": [],
+  "posts": [
+    {
+      "id": 1,
+      "firstName": "rahul",
+      "lastName": "kumar",
+      "email": "thecalmandcoolrohan@gmail.com",
+      "phone": "9582558296",
+      "age": 25,
+      "countryname": "India",
+      "statename": "Delhi",
+      "cityname": "New Delhi"
+    }
+  ],
   "comments": [],
   "profile": {
     "name": "typicode"

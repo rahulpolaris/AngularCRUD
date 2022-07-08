@@ -109,7 +109,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="cities" class="form-label">Choose a City:</label>
-                        <select id="cities" name="cities" formControlName="cityname" (change)="onStateChange($event)"  class="form-control">
+                        <select id="cities" name="cities" formControlName="cityname"   class="form-control">
                             <option *ngFor=" let city of cities" [ngValue]="city"  >{{city.name}}</option>
                         </select><br>
                     </div>
