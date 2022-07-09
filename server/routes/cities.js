@@ -8,8 +8,8 @@ const connection = require('../resources/countriesSqlDb')
 Cities.get("/cities/:stateid",async (req,res)=>{
     connection.query(`SELECT * FROM cities WHERE state_id = ${req.params.stateid} `,(err,results,fields)=>{
         if(!err){
-            console.log(results)
-            console.log(fields)
+            // console.log(results)
+            // console.log(fields)
             res.status(200).json(results)
 
         }

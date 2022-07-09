@@ -8,8 +8,8 @@ const connection = require('../resources/countriesSqlDb')
 Countries.get("/countries",async (req,res)=>{
     connection.query('SELECT * FROM countries',(err,results,fields)=>{
         if(!err){
-            console.log(results)
-            console.log(fields)
+            // console.log(results)
+            // console.log(fields)
             res.status(200).json(results)
 
         }

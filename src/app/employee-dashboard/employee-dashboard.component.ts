@@ -34,20 +34,17 @@ export class EmployeeDashboardComponent implements OnInit, OnChanges {
   states!: any[]
   cities!: any[]
   
-  // @Input() testInput!: string;
 
   constructor(private formbuilder: FormBuilder, private api: ApiService, private cscapi: CscapiService) {}
 
   ngOnInit(): void {
     this.showAdd = true;
     this.showUpdate = false;
-    // this.countries = this.cscapi.getCountries()
     console.log(this.countries)
     this.formValue = this.formbuilder.group({
       firstName: [''],
       lastName: [''],
       email: [''],
-      // email: ['',Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")],
       phone: [''],
       age: [''],
       countryname:[''],
@@ -57,7 +54,7 @@ export class EmployeeDashboardComponent implements OnInit, OnChanges {
       validators : this.customAgeValidation('age')
     });
     this.getAllEmployee();
-    this.getCountries()
+    // this.getCountries()
     this.formValue.controls['email'].setValidators([
       Validators.required,
       Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
@@ -80,6 +77,12 @@ export class EmployeeDashboardComponent implements OnInit, OnChanges {
     // this.formValue.reset()
     this.showAdd = !true;
     this.showUpdate = !false;
+  }
+  resetOnClose(){
+    this.formValue.reset()
+    this.countries = [];
+    this.states = [];
+    this.cities=[];
   }
 
   postEmployeeDetail() {
@@ -109,6 +112,7 @@ export class EmployeeDashboardComponent implements OnInit, OnChanges {
   getCountries(){
     this.cscapi.getCountries(null).subscribe((res)=>{
       this.countries = res;
+      // this.cities = [""]
       console.log(this.countries)
     },err =>{
       console.log(err)
@@ -148,6 +152,7 @@ export class EmployeeDashboardComponent implements OnInit, OnChanges {
     );
   }
   onEdit(row: any) {
+    this.getCountries()
     this.clickUpdateEmployee();
     this.employeeModelObj.id = row.id;
     this.formValue.controls['firstName'].setValue(row.firstName);
@@ -198,14 +203,12 @@ export class EmployeeDashboardComponent implements OnInit, OnChanges {
   }
   onCountryChange(event:any): void{
     let countryObj = this.formValue.controls['countryname'].value
-    // console.log(countryObj)
 this.getStates(countryObj.id)
-    // this.cities = []
+    this.cities = []
     console.log(this.states)
    
   }
   onStateChange(event:any): void{
-    // let countryObjIsoCode = this.formValue.controls['countryname'].value.isoCode
     let StateObjIsoCode = this.formValue.controls['statename'].value.id
     console.log("State id is: ",StateObjIsoCode)
    this.getCities(StateObjIsoCode)
