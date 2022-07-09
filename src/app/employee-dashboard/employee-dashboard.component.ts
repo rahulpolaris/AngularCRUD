@@ -113,7 +113,7 @@ export class EmployeeDashboardComponent implements OnInit, OnChanges {
     this.cscapi.getCountries(null).subscribe((res)=>{
       this.countries = res;
       // this.cities = [""]
-      console.log(this.countries)
+      // console.log(this.countries)
     },err =>{
       console.log(err)
     })

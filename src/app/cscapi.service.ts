@@ -12,7 +12,7 @@ export class CscapiService {
   getCountries(data:any){
     return this.http.get<any>('http://localhost:5000/countries').pipe(
       map((res: any) => {
-        console.log(res);
+        // console.log(res);
         return res;
       })
     );
@@ -20,7 +20,7 @@ export class CscapiService {
   getStates(cc: number) {
     return this.http.get<any>('http://localhost:5000/states/'+cc).pipe(
       map((res: any) => {
-        console.log(res);
+        // console.log(res);
         return res;
       })
     );
@@ -29,7 +29,7 @@ export class CscapiService {
   getCities( sc: number) {
     return this.http.get<any>('http://localhost:5000/cities/'+sc).pipe(
       map((res: any) => {
-        console.log(res);
+        // console.log(res);
         return res;
       })
     );
