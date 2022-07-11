@@ -1,7 +1,7 @@
 const express = require('express')
 const Cities = express.Router()
 const path = require('path')
-const connection = require('../resources/countriesSqlDb')
+const connection = require('../resources/connections/countriesSqlDb')
 
 
 

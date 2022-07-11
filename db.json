@@ -1,5 +1,17 @@
 {
-  "posts": [],
+  "posts": [
+    {
+      "id": 1,
+      "firstName": "rahul",
+      "lastName": "kumar",
+      "email": "thecalmandcoolrohan@gmail.com",
+      "phone": "9582558296",
+      "age": 15,
+      "countryname": "Armenia",
+      "statename": "Shirak Region",
+      "cityname": "Mayisyan"
+    }
+  ],
   "comments": [],
   "profile": {
     "name": "typicode"
