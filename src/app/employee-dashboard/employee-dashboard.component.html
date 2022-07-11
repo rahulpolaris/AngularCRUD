@@ -27,14 +27,14 @@
     <tbody>
         <tr *ngFor="let row of employeeData">
             <td>{{row.id}}</td>
-            <td>{{row.firstName}}</td>
-            <td>{{row.lastName}}</td>
+            <td>{{row.firstname}}</td>
+            <td>{{row.lastname}}</td>
             <td>{{row.email}}</td>
             <td>{{row.phone}}</td>
             <td>{{row.age}}</td>
-            <td>{{row.countryname}}</td>
-            <td>{{row.statename}}</td>
-            <td>{{row.cityname}}</td>
+            <td>{{row.country}}</td>
+            <td>{{row.state}}</td>
+            <td>{{row.city}}</td>
             <td><button (click)="onEdit(row)" class="btn btn-warning" type="button" data-bs-toggle="modal"
                     data-bs-target="#exampleModal">Edit</button>
                 <button class="btn btn-danger" (click)="deleteEmployee(row)">Delete</button>

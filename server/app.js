@@ -12,10 +12,11 @@ app.use(express.json());
 
 
 const HomeRoute = require("./routes/homeRoute");
-const Countries = require("./routes/countries");
-const States = require("./routes/states");
-const Cities = require("./routes/cities");
-const Employees = require("./routes/employees");
+const Countries = require("./routes/country_state_city/countries");
+const States = require("./routes/country_state_city/states");
+const Cities = require("./routes/country_state_city/cities");
+const Employees = require("./routes/Employees/employees");
+const SortedEmployees = require("./routes/Employees/sortedEmployees");
 
 
 
@@ -30,6 +31,7 @@ app.use("/",Countries)
 app.use("/",States)
 app.use("/",Cities)
 app.use("/",Employees)
+app.use("/",SortedEmployees)
 
 app.listen(PORT, async () => {
     console.log("listening on port:" +  PORT+ "-----------------------------------------------------");

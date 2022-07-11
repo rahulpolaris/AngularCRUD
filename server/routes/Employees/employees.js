@@ -1,7 +1,7 @@
 const express = require('express')
 const Employees = express.Router()
 const path = require('path')
-const connection = require('../resources/connections/employeesSqlDb')
+const connection = require('../../resources/db_connections/employeesSqlDb')
 
 
 
