@@ -6,7 +6,7 @@
      lastname VARCHAR(150), 
      email VARCHAR(150) NOT NULL,
      phone VARCHAR(15) NOT NULL,
-     date_of_birth DATE NOT NULL,
+     date_of_birth DATE,
      age INT unsigned NOT NULL,
      country VARCHAR(50),
      state VARCHAR(90),
@@ -16,4 +16,4 @@
 
 INSERT INTO employees (firstname,lastname,email,phone,date_of_birth,age,country,state,city) VALUES
 ('raman','ashok','raman@mail.com','9955885596','1996-03-22',26,'India','New Delhi','East Delhi'),
-('baman','tomar','raman@mail.com','9955345296','1995-03-22',27,'India','Bihar','Patna');
+('baman','tomar','baman@mail.com','9955345296','1995-03-22',27,'India','Bihar','Patna');

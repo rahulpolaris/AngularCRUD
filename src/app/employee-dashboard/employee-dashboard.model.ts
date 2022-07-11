@@ -1,13 +1,14 @@
 export class EmployeeModel {
     id:number = 0 ;
-    firstName:string = '';
-    lastName:string = '';
+    firstname:string = '';
+    lastname:string = '';
     email:string = '';
     phone:string=''
+    date_of_birth:string='';
     age:string = '';
-    countryname:string='';
-    statename:string='';
-    cityname:string='';
+    country:string='';
+    state:string='';
+    city:string='';
     // age:string = '';
     // address:any = ''
 }

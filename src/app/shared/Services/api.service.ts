@@ -9,7 +9,7 @@ export class ApiService {
   constructor(private http: HttpClient) {}
 
   postEmployee(data: any) {
-    return this.http.post<any>('http://localhost:3000/posts', data).pipe(
+    return this.http.post<any>('http://localhost:5000/employees', data).pipe(
       map((res: any) => {
         return res;
       })
@@ -23,14 +23,14 @@ export class ApiService {
     );
   }
   updateEmployee(data: any, id: number) {
-    return this.http.put<any>('http://localhost:3000/posts/' + id, data).pipe(
+    return this.http.put<any>('http://localhost:5000/employees/' + id, data).pipe(
       map((res: any) => {
         return res;
       })
     );
   }
   deleteEmployee(id: number) {
-    return this.http.delete<any>('http://localhost:3000/posts/' + id).pipe(
+    return this.http.delete<any>('http://localhost:5000/employees/' + id).pipe(
       map((res: any) => {
         return res;
       })

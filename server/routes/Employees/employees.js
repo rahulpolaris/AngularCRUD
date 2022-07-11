@@ -22,8 +22,9 @@ Employees.get("/employees",async (req,res)=>{
 
  Employees.post("/employees",async (req,res)=>{
     console.log(req.body)
+    console.log(req.headers)
     const {firstname,lastname,email,phone,date_of_birth,age,country,state,city} = req.body
-    connection.query(`INSERT INTO employees (firstname,lastname,email,phone,date_of_birth,age,country,state,city) VALUES ('${firstname}', '${lastname}', '${email}', '${phone}', '${date_of_birth}', ${age}, '${country}', '${state}', '${city}')`,(err,results,fields)=>{
+    connection.query(`INSERT INTO employees (firstname,lastname,email,phone,date_of_birth,age,country,state,city) VALUES ('${firstname}', '${lastname}', '${email}', '${phone}', ${null}, ${age}, '${country}', '${state}', '${city}')`,(err,results,fields)=>{
         if(!err){
             res.status(200).json(results)
             //  results should be like this 
@@ -44,10 +45,10 @@ Employees.get("/employees",async (req,res)=>{
 
     // res.status(200).json({sent:"Successful"})
  })  
- Employees.delete("/employees",async(req,res)=>{
+ Employees.delete("/employees/:id",async(req,res)=>{
     console.log(req.body)
     // res.status(200).send({deleted:"successful"})
-    connection.query(`DELETE FROM employees WHERE employees.id = ${req.body.id}`,(err,results,fields)=>{
+    connection.query(`DELETE FROM employees WHERE employees.id = ${req.params.id}`,(err,results,fields)=>{
         if(!err){
             res.status(200).json(results)
         }
@@ -59,11 +60,14 @@ Employees.get("/employees",async (req,res)=>{
 
     })
  })
- Employees.put("/employees", async(req,res)=>{
+ Employees.put("/employees/:id", async(req,res)=>{
     console.log(req.body)
+    console.log(req.headers)
+
+    const params_id = req.params.id
     const {id,firstname,lastname,email,phone,date_of_birth,age,country,state,city} = req.body
 
-    connection.query(`UPDATE employees SET firstname = '${firstname}', lastname = '${lastname}', email = '${email}', phone = '${phone}', date_of_birth = '${date_of_birth}', age = ${age}, country = '${country}', state = '${state}', city = '${city}' WHERE id = ${id}`,(err,results,fields)=>{
+    connection.query(`UPDATE employees SET firstname = '${firstname}', lastname = '${lastname}', email = '${email}', phone = '${phone}', date_of_birth = ${null}, age = ${age}, country = '${country}', state = '${state}', city = '${city}' WHERE id = ${params_id}`,(err,results,fields)=>{
         if(!err){
             res.status(200).json(results)
         }
