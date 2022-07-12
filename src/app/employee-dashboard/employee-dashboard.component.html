@@ -32,7 +32,7 @@
             <td>{{row.lastname}}</td>
             <td>{{row.email}}</td>
             <td>{{row.phone}}</td>
-            <td  appDobFormatter    >{{row.date_of_birth}}</td>
+            <td  appDobFormatter >{{row.date_of_birth}}</td>
             <td>{{row.age}}</td>
             <td>{{row.country}}</td>
             <td>{{row.state}}</td>
@@ -91,12 +91,16 @@
                     <div class="mb-3">
                         <label for="Date_of_birth" class = "form-label">Date OF Birth:</label>
                         <input type="date" formControlName="date_of_birth" class="form-control" id="Date_of_birth" (change)="onDOBChange()">
+                        <span class="text-danger"
+                        *ngIf="formValue.controls['date_of_birth'].dirty && formValue.hasError('wrongDate')">cant be less than 10 and more than 120
+                        </span>
+
                     </div>
                     <div class="mb-3">
                         <label for="Age" class="form-label">Age</label>
                         <input type="number" class="form-control" id="Age" formControlName="age" appAgeValidation>
                         <span class="text-danger"
-                            *ngIf="formValue.controls['age'].dirty && formValue.hasError('wrongAge')">cant be less than 10 and more than 120
+                            *ngIf="formValue.controls['age'].dirty && formValue.hasError('wrongAge')">age must be atleast 10
                             </span>
 
 

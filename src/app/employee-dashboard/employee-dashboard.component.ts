@@ -52,7 +52,7 @@ export class EmployeeDashboardComponent implements OnInit, OnChanges {
       statename:[''],
       cityname:['']
     },{
-      validators : this.customAgeValidation('age')
+      validators : [this.customAgeValidation('age'),this.customDobValidation('date_of_birth')]
     });
     this.getAllEmployee();
     // this.getCountries()
@@ -154,6 +154,32 @@ export class EmployeeDashboardComponent implements OnInit, OnChanges {
     );
   }
   onEdit(row: any) {
+    const date : Date = new Date(row.date_of_birth)
+    const monthStr = (date:Date):string =>{
+      const m = date.getUTCMonth()+1
+      if(m<10)
+      {
+        return `0${m}`
+      }
+      else
+      {
+        return `${m}`
+      }
+    }
+    const dateStr = (date:Date):string =>{
+      const m = date.getUTCDate()
+      if(m<10)
+      {
+        return `0${m}`
+      }
+      else
+      {
+        return `${m}`
+      }
+
+
+    }
+    const DateStr = `${date.getFullYear()}-${monthStr(date)}-${dateStr(date)}`
     this.getCountries()
     this.clickUpdateEmployee();
     this.employeeModelObj.id = row.id;
@@ -161,6 +187,7 @@ export class EmployeeDashboardComponent implements OnInit, OnChanges {
     this.formValue.controls['lastName'].setValue(row.lastname);
     this.formValue.controls['email'].setValue(row.email);
     this.formValue.controls['phone'].setValue(row.phone);
+    this.formValue.controls['date_of_birth'].setValue(DateStr)
     this.formValue.controls['age'].setValue(row.age);
     this.formValue.controls['countryname'].setValue(row.country);
     this.formValue.controls['statename'].setValue(row.state);
@@ -203,6 +230,28 @@ export class EmployeeDashboardComponent implements OnInit, OnChanges {
         }
       }
     };
+  }
+  private customDobValidation(controlDobName:string): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null =>{
+      const formGroup = control as FormGroup
+      const valueOfDOB =  formGroup.get(controlDobName)?.value
+      // console.log(valueOfDOB)
+      const currentDate = new Date()
+      const acquiredDate = new Date(valueOfDOB)
+      if (currentDate.getFullYear()-acquiredDate.getFullYear()<10)
+      {
+        return {
+          wrongDate: true
+        }
+      }
+      else {
+        return null
+      }
+        //       return {
+        //   wrongDate: true
+        // }
+
+    }
   }
   onDOBChange():void {
     console.log(this.formValue.controls['date_of_birth'].value)
