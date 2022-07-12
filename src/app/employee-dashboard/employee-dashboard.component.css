@@ -6,3 +6,20 @@ color:red;
 .give-me-space{
     margin:0 15px;
 }
+.custom-grid{
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+}
+.btn{
+    margin: 0 5px;
+}
+.custom-flex{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+    margin-top: 10px;
+
+}
