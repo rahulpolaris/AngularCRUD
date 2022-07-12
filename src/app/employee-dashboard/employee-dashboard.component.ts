@@ -24,6 +24,7 @@ import { CscapiService } from '../shared/Services/cscapi.service';
 })
 export class EmployeeDashboardComponent implements OnInit, OnChanges {
   formValue!: FormGroup;
+  sortForm!: FormGroup;
   employeeModelObj: EmployeeModel = new EmployeeModel();
   employeeData!: any;
   showAdd!: boolean;
@@ -33,6 +34,7 @@ export class EmployeeDashboardComponent implements OnInit, OnChanges {
   countries!: any
   states!: any[]
   cities!: any[]
+  formBlur!: {email:boolean,date_of_birth:boolean,age:boolean,phone:boolean}
   
 
   constructor(private formbuilder: FormBuilder, private api: ApiService, private cscapi: CscapiService) {}
@@ -54,6 +56,11 @@ export class EmployeeDashboardComponent implements OnInit, OnChanges {
     },{
       validators : [this.customAgeValidation('age'),this.customDobValidation('date_of_birth')]
     });
+    this.sortForm = this.formbuilder.group({
+      sortby:[''],
+      order:['']
+    })
+
     this.getAllEmployee();
     // this.getCountries()
     this.formValue.controls['email'].setValidators([
@@ -64,6 +71,7 @@ export class EmployeeDashboardComponent implements OnInit, OnChanges {
       Validators.minLength(10),
       Validators.required,
     ]);
+    this.formBlur = {email:false,date_of_birth:false, age:false,phone:false}
   }
   ngOnChanges(changes: SimpleChanges): void {
     console.log(changes);
@@ -140,6 +148,11 @@ export class EmployeeDashboardComponent implements OnInit, OnChanges {
       this.employeeData = res;
       // console.log(this.employeeData)
     });
+  }
+  getAllSortedEmployee(sortby:string,order:string){
+    this.api.getSortedEmployee(sortby,order).subscribe((res)=> {
+      this.employeeData = res;
+    })
   }
   deleteEmployee(row: any) {
     this.api.deleteEmployee(row.id).subscribe(
@@ -253,6 +266,17 @@ export class EmployeeDashboardComponent implements OnInit, OnChanges {
 
     }
   }
+  onClickGetSortedEmployees():void{
+    if(this.sortForm.controls['sortby'].value.length===0 || this.sortForm.controls['order'].value.length === 0)
+    {
+      // const sb ='id'
+      // const o = 'asc'
+      this.getAllSortedEmployee('id','asc')
+    }
+    this.getAllSortedEmployee(this.sortForm.controls['sortby'].value,this.sortForm.controls['order'].value)
+  }
+
+  //form change events
   onDOBChange():void {
     console.log(this.formValue.controls['date_of_birth'].value)
   }
@@ -268,4 +292,14 @@ this.getStates(countryObj.id)
     console.log("State id is: ",StateObjIsoCode)
    this.getCities(StateObjIsoCode)
   }
+  onSortChange():void {
+    console.log(this.sortForm.value.sortby,this.sortForm.value.order)
+  }
+
+  //form blur events
+  onEmailBlur():void{
+    this.formBlur.email = true
+    
+  }
+
 }

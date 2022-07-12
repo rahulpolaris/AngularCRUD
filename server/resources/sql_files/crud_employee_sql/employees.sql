@@ -16,4 +16,6 @@
 
 INSERT INTO employees (firstname,lastname,email,phone,date_of_birth,age,country,state,city) VALUES
 ('raman','ashok','raman@mail.com','9955885596','1996-03-22',26,'India','New Delhi','East Delhi'),
-('baman','tomar','baman@mail.com','9955345296','1995-03-22',27,'India','Bihar','Patna');
+('baman','tomar','baman@mail.com','9958645296','1995-03-22',27,'India','Bihar','Patna'),
+('aman','singh','aman@mail.com','1258645296','1994-06-19',26,'India','Karnataka','Bannur'),
+('Shubham','Mishra','baman@mail.com','9639645296','1997-05-12',25,'India','Lakshadweep','Kavaratti');

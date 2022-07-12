@@ -9,6 +9,23 @@
     </div>
 </nav>
 
+<div class="mb-3">
+    <form [formGroup]="sortForm" (change)="onSortChange()">
+        <label for="sort_by">Sort By:</label>
+        <select name="sort_by" id="SortBy" formControlName="sortby" value = 'id' >
+            <option value='id'>id</option>
+            <option value="firstname">firstname</option>
+            <option value ="state">state</option>
+        </select>
+        <label for="order">Choose Order</label>
+        <select name="order" id="Order" formControlName="order" value = 'asc'>
+            <option value="asc">Ascending</option>
+            <option value="desc">Descending</option>
+        </select>
+        <button class="btn btn-secondary" (click)="onClickGetSortedEmployees()">Get Emps</button>
+    </form>
+</div>
+
 <table class="table mt-3">
     <thead>
         <tr>
@@ -67,12 +84,12 @@
                     </div>
                     <div class="mb-3">
                         <label for="Email" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="Email" formControlName="email">
+                        <input type="email" class="form-control" id="Email" formControlName="email" (blur)="onEmailBlur()">
                         <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div><br>
                         <span class="text-danger" *ngIf="formValue.hasError('required','email')">*Email ID is
                             Required</span>
                         <span class="text-danger"
-                            *ngIf="formValue.controls['email'].dirty && formValue.hasError('pattern','email')">not a
+                            *ngIf="formValue.controls['email'].dirty && formValue.hasError('pattern','email') && formBlur.email">not a
                             valid email</span>
 
 
