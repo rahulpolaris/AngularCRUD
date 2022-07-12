@@ -39,4 +39,7 @@ export class ApiService {
   getSortedEmployee(sortby:string, order:string){
     return this.http.get<any>(`http://localhost:5000/employees/${sortby}/${order}`)
   }
+  getFilteredEmployee(filter:string){
+    return this.http.get<any>(`http://localhost:5000/employees/filter?firstname=${filter}`)
+  }
 }

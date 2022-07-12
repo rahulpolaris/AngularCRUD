@@ -25,6 +25,7 @@ import { CscapiService } from '../shared/Services/cscapi.service';
 export class EmployeeDashboardComponent implements OnInit, OnChanges {
   formValue!: FormGroup;
   sortForm!: FormGroup;
+  filterForm!: FormGroup;
   employeeModelObj: EmployeeModel = new EmployeeModel();
   employeeData!: any;
   showAdd!: boolean;
@@ -57,8 +58,11 @@ export class EmployeeDashboardComponent implements OnInit, OnChanges {
       validators : [this.customAgeValidation('age'),this.customDobValidation('date_of_birth')]
     });
     this.sortForm = this.formbuilder.group({
-      sortby:[''],
-      order:['']
+      sortby:['id'],
+      order:['asc']
+    })
+    this.filterForm = this.formbuilder.group({
+      filter:['']
     })
 
     this.getAllEmployee();
@@ -152,6 +156,11 @@ export class EmployeeDashboardComponent implements OnInit, OnChanges {
   getAllSortedEmployee(sortby:string,order:string){
     this.api.getSortedEmployee(sortby,order).subscribe((res)=> {
       this.employeeData = res;
+    })
+  }
+  getAllfilteredEmployee(filter:string){
+    this.api.getFilteredEmployee(filter).subscribe((res)=>{
+      this.employeeData = res
     })
   }
   deleteEmployee(row: any) {
@@ -275,7 +284,14 @@ export class EmployeeDashboardComponent implements OnInit, OnChanges {
     }
     this.getAllSortedEmployee(this.sortForm.controls['sortby'].value,this.sortForm.controls['order'].value)
   }
+ onClickFilteredEmployees():void { 
+  if (this.filterForm.controls['filter'].value.length === 0)
+  {
+    return
+  }
+  this.getAllfilteredEmployee(this.filterForm.controls['filter'].value)
 
+ }
   //form change events
   onDOBChange():void {
     console.log(this.formValue.controls['date_of_birth'].value)

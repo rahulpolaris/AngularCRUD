@@ -11,13 +11,13 @@
 
 <div class="mb-3">
     <form [formGroup]="sortForm" (change)="onSortChange()">
-        <label for="sort_by">Sort By:</label>
+        <label for="sort_by" class="custom-label">Sort By:</label>
         <select name="sort_by" id="SortBy" formControlName="sortby" value = 'id' >
             <option value='id'>id</option>
             <option value="firstname">firstname</option>
             <option value ="state">state</option>
         </select>
-        <label for="order">Choose Order</label>
+        <label for="order" class="custom-label">Choose Order</label>
         <select name="order" id="Order" formControlName="order" value = 'asc'>
             <option value="asc">Ascending</option>
             <option value="desc">Descending</option>
@@ -25,6 +25,10 @@
         <button class="btn btn-secondary" (click)="onClickGetSortedEmployees()">Get Emps</button>
     </form>
 </div>
+<form [formGroup]="filterForm" class="give-me-space"> 
+    <input type="text" name="filter" formControlName="filter" id="Filter" placeholder="search by firstname">
+    <button class = "btn btn-warning" (click)="onClickFilteredEmployees()">Get employees</button>
+</form>
 
 <table class="table mt-3">
     <thead>
