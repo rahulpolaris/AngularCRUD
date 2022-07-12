@@ -8,13 +8,15 @@ import { EmployeeDashboardComponent } from './employee-dashboard/employee-dashbo
 import { HttpClientModule } from '@angular/common/http';
 import { InputnumberDirective } from './shared/Directives/inputnumber.directive';
 import { AgeValidationDirective } from './shared/Directives/age-validation.directive';
+import { DobFormatterDirective } from './shared/Directives/dob-formatter.directive';
 
 @NgModule({
   declarations: [
     AppComponent,
     EmployeeDashboardComponent,
     InputnumberDirective,
-    AgeValidationDirective
+    AgeValidationDirective,
+    DobFormatterDirective
   ],
   imports: [
     BrowserModule,

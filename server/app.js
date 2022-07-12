@@ -18,6 +18,7 @@ const States = require("./routes/country_state_city/states");
 const Cities = require("./routes/country_state_city/cities");
 const Employees = require("./routes/Employees/employees");
 const SortedEmployees = require("./routes/Employees/sortedEmployees");
+const FilteredEmployees = require("./routes/Employees/filteredEmployees");
 
 
 
@@ -35,6 +36,7 @@ app.use("/",States)
 app.use("/",Cities)
 app.use("/",Employees)
 app.use("/",SortedEmployees)
+app.use("/",FilteredEmployees)
 
 app.listen(PORT, async () => {
     console.log("listening on port:" +  PORT+ "-----------------------------------------------------");

@@ -46,6 +46,7 @@ export class EmployeeDashboardComponent implements OnInit, OnChanges {
       lastName: [''],
       email: [''],
       phone: [''],
+      date_of_birth:[''],
       age: [''],
       countryname:[''],
       statename:[''],
@@ -90,6 +91,7 @@ export class EmployeeDashboardComponent implements OnInit, OnChanges {
     this.employeeModelObj.lastname = this.formValue.value.lastName;
     this.employeeModelObj.email = this.formValue.value.email;
     this.employeeModelObj.phone = this.formValue.value.phone;
+    this.employeeModelObj.date_of_birth = this.formValue.value.date_of_birth;
     this.employeeModelObj.age = this.formValue.value.age;
     this.employeeModelObj.country = this.formValue.value.countryname.name;
     this.employeeModelObj.state = this.formValue.value.statename.name;
@@ -136,7 +138,7 @@ export class EmployeeDashboardComponent implements OnInit, OnChanges {
   getAllEmployee() {
     this.api.getEmployee().subscribe((res) => {
       this.employeeData = res;
-      console.log(this.employeeData)
+      // console.log(this.employeeData)
     });
   }
   deleteEmployee(row: any) {
@@ -170,6 +172,7 @@ export class EmployeeDashboardComponent implements OnInit, OnChanges {
     this.employeeModelObj.lastname = this.formValue.value.lastName;
     this.employeeModelObj.email = this.formValue.value.email;
     this.employeeModelObj.phone = this.formValue.value.phone;
+    this.employeeModelObj.date_of_birth = this.formValue.value.date_of_birth;
     this.employeeModelObj.age = this.formValue.value.age;
     this.employeeModelObj.country = this.formValue.value.countryname.name;
     this.employeeModelObj.state = this.formValue.value.statename.name;
@@ -200,6 +203,9 @@ export class EmployeeDashboardComponent implements OnInit, OnChanges {
         }
       }
     };
+  }
+  onDOBChange():void {
+    console.log(this.formValue.controls['date_of_birth'].value)
   }
   onCountryChange(event:any): void{
     let countryObj = this.formValue.controls['countryname'].value
