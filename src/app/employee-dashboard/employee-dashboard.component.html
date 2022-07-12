@@ -11,7 +11,7 @@
 <div class="custom-flex">
     <div class="custom-grid">
     
-        <div class="">
+        <div class="sortForm">
             <form [formGroup]="sortForm" (change)="onSortChange()">
                 <label for="sort_by" class="custom-label">Sort By:</label>
                 <select name="sort_by" id="SortBy" formControlName="sortby" value = 'id' >
@@ -27,10 +27,12 @@
                 <button class="btn btn-secondary" (click)="onClickGetSortedEmployees()">Sort</button>
             </form>
         </div>
-        <form [formGroup]="filterForm" class="give-me-space">
-            <input type="text" name="filter" formControlName="filter" id="Filter" placeholder="search by firstname">
-            <button class = "btn btn-warning" (click)="onClickFilteredEmployees()">Get employees</button>
-        </form>
+        <div class="filterForm">
+            <form [formGroup]="filterForm" class="give-me-space">
+                <input type="text" name="filter" formControlName="filter" id="Filter" placeholder="search by firstname">
+                <button class = "btn btn-warning" (click)="onClickFilteredEmployees()">Get employees</button>
+            </form>
+        </div>
     </div>
 </div>
 
