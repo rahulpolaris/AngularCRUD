@@ -53,7 +53,7 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let row of employeeData">
+        <tr *ngFor="let row of employeeData | paginate:{itemsPerPage: tableSize, currentPage: page, totalItems: count} ">
             <td>{{row.id}}</td>
             <td>{{row.firstname}}</td>
             <td>{{row.lastname}}</td>
@@ -71,6 +71,17 @@
         </tr>
     </tbody>
 </table>
+<div >
+    <pagination-controls previousLabel="prev" nextLabel="next" (pageChange)="onTableDataChange($event)">
+
+    </pagination-controls>
+    <div>
+        <label for="tableSize">Select Table Size</label>
+        <select name="tableSize" id="" (change)="onTableSizeChange($event)">
+            <option *ngFor="let table_size of tableSizes" [value]="table_size">{{table_size}}</option>
+        </select>
+    </div>
+</div>
 <!-- Button trigger modal -->
 
 <!-- Modal -->

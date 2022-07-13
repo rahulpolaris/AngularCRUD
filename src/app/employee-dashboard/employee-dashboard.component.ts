@@ -36,6 +36,10 @@ export class EmployeeDashboardComponent implements OnInit, OnChanges {
   states!: any[]
   cities!: any[]
   formBlur!: {email:boolean,date_of_birth:boolean,age:boolean,phone:boolean}
+  page: number = 1;
+  count: number = 0;
+  tableSize: number =2;
+  tableSizes: number[]= [2,3,4,5,10,15,20]
   
 
   constructor(private formbuilder: FormBuilder, private api: ApiService, private cscapi: CscapiService) {}
@@ -318,4 +322,14 @@ this.getStates(countryObj.id)
     
   }
 
+
+  onTableDataChange(event:any){
+    this.page = event
+    this.getAllEmployee();
+  }
+  onTableSizeChange(event :any){
+    this.tableSize = event.target.value
+    this.page = 1;
+    this.getAllEmployee();
+  }
 }

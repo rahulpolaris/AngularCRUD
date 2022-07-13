@@ -8,7 +8,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "startjsonserver": "json-server --watch db.json",
-    "startsqlserver":"node server/app.js"
+    "startsqlserver": "node server/app.js"
   },
   "private": true,
   "dependencies": {
@@ -23,6 +23,7 @@
     "country-state-city": "^3.0.1",
     "express": "^4.18.1",
     "mysql2": "^2.3.3",
+    "ngx-pagination": "^6.0.2",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"

@@ -6,6 +6,7 @@ const connection = require('../../resources/db_connections/employeesSqlDb')
 
 
 Employees.get("/employees", async (req, res) => {
+    
     connection.query(`SELECT * FROM employees `, (err, results, fields) => {
         if (!err) {
             res.status(200).json(results)
@@ -24,6 +25,7 @@ Employees.post("/employees", async (req, res) => {
     console.log(req.body)
     console.log(req.headers)
     const { firstname, lastname, email, phone, date_of_birth, age, country, state, city } = req.body
+    
     
     connection.query(`INSERT INTO employees (firstname,lastname,email,phone,date_of_birth,age,country,state,city) VALUES ('${firstname}', '${lastname}', '${email}', '${phone}', '${date_of_birth}', ${age}, '${country}', '${state}', '${city}')`, (err, results, fields) => {
         if (!err) {
