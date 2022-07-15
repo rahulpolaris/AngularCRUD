@@ -59,7 +59,7 @@ export class EmployeeDashboardComponent implements OnInit, OnChanges {
       statename:[''],
       cityname:['']
     },{
-      validators : [this.customAgeValidation('age'),this.customDobValidation('date_of_birth')]
+      validators : [this.customDobValidation('date_of_birth')]
     });
     this.sortForm = this.formbuilder.group({
       sortby:['id'],
@@ -108,7 +108,7 @@ export class EmployeeDashboardComponent implements OnInit, OnChanges {
     this.employeeModelObj.email = this.formValue.value.email;
     this.employeeModelObj.phone = this.formValue.value.phone;
     this.employeeModelObj.date_of_birth = this.formValue.value.date_of_birth;
-    this.employeeModelObj.age = this.formValue.value.age;
+    // this.employeeModelObj.age = this.formValue.value.age;
     this.employeeModelObj.country = this.formValue.value.countryname.name;
     this.employeeModelObj.state = this.formValue.value.statename.name;
     this.employeeModelObj.city = this.formValue.value.cityname.name;
@@ -214,7 +214,7 @@ export class EmployeeDashboardComponent implements OnInit, OnChanges {
     this.formValue.controls['email'].setValue(row.email);
     this.formValue.controls['phone'].setValue(row.phone);
     this.formValue.controls['date_of_birth'].setValue(DateStr)
-    this.formValue.controls['age'].setValue(row.age);
+    // this.formValue.controls['age'].setValue(row.age);
     this.formValue.controls['countryname'].setValue(row.country);
     this.formValue.controls['statename'].setValue(row.state);
     this.formValue.controls['cityname'].setValue(row.city);
@@ -226,7 +226,7 @@ export class EmployeeDashboardComponent implements OnInit, OnChanges {
     this.employeeModelObj.email = this.formValue.value.email;
     this.employeeModelObj.phone = this.formValue.value.phone;
     this.employeeModelObj.date_of_birth = this.formValue.value.date_of_birth;
-    this.employeeModelObj.age = this.formValue.value.age;
+    // this.employeeModelObj.age = this.formValue.value.age;
     this.employeeModelObj.country = this.formValue.value.countryname.name;
     this.employeeModelObj.state = this.formValue.value.statename.name;
     this.employeeModelObj.city = this.formValue.value.cityname.name;
@@ -243,20 +243,23 @@ export class EmployeeDashboardComponent implements OnInit, OnChanges {
         this.getAllEmployee();
       });
   }
-  private customAgeValidation(controlAgeName:string): ValidatorFn {
-    return (control: AbstractControl): ValidationErrors | null => {
-      const formGroup =  control as FormGroup
-      const valueOfAge = formGroup.get(controlAgeName)?.value
-      // console.log(valueOfAge)
-      if (parseFloat(valueOfAge)>10 && parseFloat(valueOfAge)<120) {
-        return null;
-      } else {
-        return  {
-          wrongAge: true
-        }
-      }
-    };
-  }
+
+
+  //custom validations....
+  // private customAgeValidation(controlAgeName:string): ValidatorFn {
+  //   return (control: AbstractControl): ValidationErrors | null => {
+  //     const formGroup =  control as FormGroup
+  //     const valueOfAge = formGroup.get(controlAgeName)?.value
+  //     // console.log(valueOfAge)
+  //     if (parseFloat(valueOfAge)>10 && parseFloat(valueOfAge)<120) {
+  //       return null;
+  //     } else {
+  //       return  {
+  //         wrongAge: true
+  //       }
+  //     }
+  //   };
+  // }
   private customDobValidation(controlDobName:string): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null =>{
       const formGroup = control as FormGroup

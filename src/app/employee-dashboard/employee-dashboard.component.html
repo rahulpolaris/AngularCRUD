@@ -45,7 +45,7 @@
             <th scope="col">Email</th>
             <th scope="col">Phone</th>
             <th scope="col">dob</th>
-            <th scope="col">age</th>
+            <!-- <th scope="col">age</th> -->
             <th scope="col">Country</th>
             <th scope="col">State</th>
             <th scope="col">City</th>
@@ -60,7 +60,7 @@
             <td>{{row.email}}</td>
             <td>{{row.phone}}</td>
             <td  appDobFormatter >{{row.date_of_birth}}</td>
-            <td>{{row.age}}</td>
+            <!-- <td>{{row.age}}</td> -->
             <td>{{row.country}}</td>
             <td>{{row.state}}</td>
             <td>{{row.city}}</td>
@@ -134,7 +134,7 @@
                         </span>
 
                     </div>
-                    <div class="mb-3">
+                    <!-- <div class="mb-3">
                         <label for="Age" class="form-label">Age</label>
                         <input type="number" class="form-control" id="Age" formControlName="age" appAgeValidation>
                         <span class="text-danger"
@@ -142,7 +142,7 @@
                             </span>
 
 
-                    </div>
+                    </div> -->
                     <div class="mb-3">
                         <label for="countries" class="form-label">Choose a Country:</label>
                         <select id="countries" name="countries" formControlName="countryname" (change)="onCountryChange($event)"  class="form-control">

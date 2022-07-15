@@ -5,7 +5,6 @@ export class EmployeeModel {
     email:string = '';
     phone:string=''
     date_of_birth:string='';
-    age:string = '';
     country:string='';
     state:string='';
     city:string='';
