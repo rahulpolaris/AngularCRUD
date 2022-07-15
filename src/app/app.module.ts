@@ -10,6 +10,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { InputnumberDirective } from './shared/Directives/inputnumber.directive';
 import { AgeValidationDirective } from './shared/Directives/age-validation.directive';
 import { DobFormatterDirective } from './shared/Directives/dob-formatter.directive';
+import { LoginComponent } from './login/login.component';
+import { SignupComponent } from './signup/signup.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +19,9 @@ import { DobFormatterDirective } from './shared/Directives/dob-formatter.directi
     EmployeeDashboardComponent,
     InputnumberDirective,
     AgeValidationDirective,
-    DobFormatterDirective
+    DobFormatterDirective,
+    LoginComponent,
+    SignupComponent
   ],
   imports: [
     BrowserModule,
