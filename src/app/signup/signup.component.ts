@@ -47,6 +47,9 @@ export class SignupComponent implements OnInit {
   this.employeeModelObj.country = this.signupForm.value.country
   this.employeeModelObj.state = this.signupForm.value.state
   this.employeeModelObj.city = this.signupForm.value.city
+  // const signUpPayLoad = new Map()
+
+  this.api
   }
   onSignUpButtonClick():void {
     this.api

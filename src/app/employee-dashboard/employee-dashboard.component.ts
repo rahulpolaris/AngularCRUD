@@ -50,7 +50,7 @@ export class EmployeeDashboardComponent implements OnInit, OnChanges {
     console.log(this.countries)
     this.formValue = this.formbuilder.group({
       firstName: [''],
-      lastName: [''],
+      lastName: [' '],
       email: [''],
       phone: [''],
       date_of_birth:[''],
@@ -62,7 +62,7 @@ export class EmployeeDashboardComponent implements OnInit, OnChanges {
       validators : [this.customDobValidation('date_of_birth')]
     });
     this.sortForm = this.formbuilder.group({
-      sortby:['id'],
+      sortby:['emp_id'],
       order:['asc']
     })
     this.filterForm = this.formbuilder.group({
@@ -108,10 +108,22 @@ export class EmployeeDashboardComponent implements OnInit, OnChanges {
     this.employeeModelObj.email = this.formValue.value.email;
     this.employeeModelObj.phone = this.formValue.value.phone;
     this.employeeModelObj.date_of_birth = this.formValue.value.date_of_birth;
-    // this.employeeModelObj.age = this.formValue.value.age;
-    this.employeeModelObj.country = this.formValue.value.countryname.name;
-    this.employeeModelObj.state = this.formValue.value.statename.name;
-    this.employeeModelObj.city = this.formValue.value.cityname.name;
+    // this.employeeModelObj.age = this.formValue.value.age
+    if(this.formValue.value.countryname?.name )
+    {
+      
+      this.employeeModelObj.country = this.formValue.value.countryname.name 
+    }
+    if(this.formValue.value.statename?.name )
+    {
+      
+      this.employeeModelObj.state = this.formValue.value.statename.name;
+    }
+    if(this.formValue.value.statename?.name )
+    {
+
+      this.employeeModelObj.city = this.formValue.value.cityname.name;
+    }
 
     this.api.postEmployee(this.employeeModelObj).subscribe(
       (res) => {
@@ -168,7 +180,8 @@ export class EmployeeDashboardComponent implements OnInit, OnChanges {
     })
   }
   deleteEmployee(row: any) {
-    this.api.deleteEmployee(row.id).subscribe(
+    console.log(row)
+    this.api.deleteEmployee(row.emp_id).subscribe(
       (res) => {
         alert('Employee Removed');
         this.getAllEmployee();
@@ -208,7 +221,7 @@ export class EmployeeDashboardComponent implements OnInit, OnChanges {
     const DateStr = `${date.getFullYear()}-${monthStr(date)}-${dateStr(date)}`
     this.getCountries()
     this.clickUpdateEmployee();
-    this.employeeModelObj.id = row.id;
+    this.employeeModelObj.id = row.emp_id;
     this.formValue.controls['firstName'].setValue(row.firstname);
     this.formValue.controls['lastName'].setValue(row.lastname);
     this.formValue.controls['email'].setValue(row.email);

@@ -1,5 +1,5 @@
 export class EmployeeModel {
-    id:number = 0 ;
+    id:string = '' ;
     firstname:string = '';
     lastname:string = '';
     email:string = '';

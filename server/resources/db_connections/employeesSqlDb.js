@@ -3,7 +3,8 @@ const connection = mysql.createConnection({
     host: 'localhost',
     user: 'testuser',
     database: 'crudemployeesdb',
-    password:'Password1!'
+    password:'Password1!',
+    multipleStatements: true
   });
    
  module.exports = connection 

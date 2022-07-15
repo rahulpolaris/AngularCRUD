@@ -2,6 +2,7 @@ const express = require("express");
 const Employees = express.Router();
 const path = require("path");
 const connection = require("../../resources/db_connections/employeesSqlDb");
+const { v4: uuidv4 } = require('uuid');
 
 Employees.get("/employees", async (req, res) => {
   connection.query(`SELECT * FROM employees `, (err, results, fields) => {
@@ -27,6 +28,7 @@ Employees.post("/employees", async (req, res) => {
     state,
     city,
   } = req.body;
+  const emp_id = uuidv4()
   let dob  = date_of_birth
   if (date_of_birth.length === 0)
   {
@@ -38,7 +40,7 @@ Employees.post("/employees", async (req, res) => {
   }
 
   connection.query(
-    `INSERT INTO employees (firstname,lastname,email,phone,date_of_birth,country,state,city) VALUES ('${firstname}', '${lastname}', '${email}', '${phone}', ${dob},  '${country}', '${state}', '${city}')`,
+    `INSERT INTO employees (emp_id,firstname,lastname,email,phone,date_of_birth,country,state,city) VALUES ( '${emp_id}','${firstname}', '${lastname}', '${email}', '${phone}', ${dob},  '${country}', '${state}', '${city}');INSERT INTO employees_passwords (password,employee_id) VALUES ('!Password123','${emp_id}');`,
     (err, results, fields) => {
       if (!err) {
         res.status(200).json(results);
@@ -61,10 +63,10 @@ Employees.post("/employees", async (req, res) => {
   // res.status(200).json({sent:"Successful"})
 });
 Employees.delete("/employees/:id", async (req, res) => {
-  console.log(req.body);
+  console.log(req.params);
   // res.status(200).send({deleted:"successful"})
   connection.query(
-    `DELETE FROM employees WHERE employees.id = ${req.params.id}`,
+    `DELETE FROM employees WHERE employees.emp_id = '${req.params.id}'`,
     (err, results, fields) => {
       if (!err) {
         res.status(200).json(results);
@@ -93,7 +95,7 @@ Employees.put("/employees/:id", async (req, res) => {
   } = req.body;
 
   connection.query(
-    `UPDATE employees SET firstname = '${firstname}', lastname = '${lastname}', email = '${email}', phone = '${phone}', date_of_birth = '${date_of_birth}', country = '${country}', state = '${state}', city = '${city}' WHERE id = ${params_id}`,
+    `UPDATE employees SET firstname = '${firstname}', lastname = '${lastname}', email = '${email}', phone = '${phone}', date_of_birth = '${date_of_birth}', country = '${country}', state = '${state}', city = '${city}' WHERE emp_id = '${params_id}'`,
     (err, results, fields) => {
       if (!err) {
         res.status(200).json(results);

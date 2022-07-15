@@ -22,14 +22,14 @@ export class ApiService {
       })
     );
   }
-  updateEmployee(data: any, id: number) {
+  updateEmployee(data: any, id: string) {
     return this.http.put<any>('http://localhost:5000/employees/' + id, data).pipe(
       map((res: any) => {
         return res;
       })
     );
   }
-  deleteEmployee(id: number) {
+  deleteEmployee(id: string) {
     return this.http.delete<any>('http://localhost:5000/employees/' + id).pipe(
       map((res: any) => {
         return res;

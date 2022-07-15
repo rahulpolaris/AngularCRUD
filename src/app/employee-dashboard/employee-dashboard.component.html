@@ -15,7 +15,7 @@
             <form [formGroup]="sortForm" (change)="onSortChange()">
                 <label for="sort_by" class="custom-label">Sort By:</label>
                 <select name="sort_by" id="SortBy" formControlName="sortby" value = 'id' >
-                    <option value='id'>id</option>
+                    <option value='emp_id'>Employee ID</option>
                     <option value="firstname">First name</option>
                     <option value ="state">State</option>
                 </select>
@@ -39,7 +39,7 @@
 <table class="table mt-3">
     <thead>
         <tr>
-            <th scope="col">id</th>
+            <!-- <th scope="col">id</th> -->
             <th scope="col">First name</th>
             <th scope="col">Last Name</th>
             <th scope="col">Email</th>
@@ -54,7 +54,7 @@
     </thead>
     <tbody>
         <tr *ngFor="let row of employeeData | paginate:{itemsPerPage: tableSize, currentPage: page, totalItems: count} ">
-            <td>{{row.id}}</td>
+            <!-- <td>{{row.id}}</td> -->
             <td>{{row.firstname}}</td>
             <td>{{row.lastname}}</td>
             <td>{{row.email}}</td>
