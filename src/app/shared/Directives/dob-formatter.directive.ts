@@ -19,7 +19,7 @@ ngAfterContentInit(){
    const formattedDateString = `${date}-${month+1}-${year}`
    console.log(empDob)
    this.dateRowElement.nativeElement.innerText = formattedDateString
-  
+  // if (formattedDateString === "Na")
   }
 
 }

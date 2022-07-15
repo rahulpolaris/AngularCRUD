@@ -13,7 +13,7 @@ import {
   ValidatorFn,
   ValidationErrors,
 } from '@angular/forms';
-import { EmployeeModel } from './employee-dashboard.model';
+import { EmployeeModel } from '../shared/Models/employee-dashboard.model';
 import { ApiService } from '../shared/Services/api.service';
 import { CscapiService } from '../shared/Services/cscapi.service';
 
