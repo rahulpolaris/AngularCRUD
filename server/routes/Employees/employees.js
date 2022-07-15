@@ -27,9 +27,18 @@ Employees.post("/employees", async (req, res) => {
     state,
     city,
   } = req.body;
+  let dob  = date_of_birth
+  if (date_of_birth.length === 0)
+  {
+    dob = null
+  }
+  else
+  {
+    dob = `'${date_of_birth}'`
+  }
 
   connection.query(
-    `INSERT INTO employees (firstname,lastname,email,phone,date_of_birth,country,state,city) VALUES ('${firstname}', '${lastname}', '${email}', '${phone}', '${date_of_birth}',  '${country}', '${state}', '${city}')`,
+    `INSERT INTO employees (firstname,lastname,email,phone,date_of_birth,country,state,city) VALUES ('${firstname}', '${lastname}', '${email}', '${phone}', ${dob},  '${country}', '${state}', '${city}')`,
     (err, results, fields) => {
       if (!err) {
         res.status(200).json(results);
