@@ -28,6 +28,7 @@ export class SignupComponent implements OnInit {
   constructor(private formBuilder : FormBuilder, private api: ApiService, private router: Router) { }
 
   ngOnInit(): void {
+    this.formBlur = {email:false,firstName:false,phone:false,password:false,cPassword:false}
     this.signupForm = this.formBuilder.group({
       firstName:[''],
       lastName:[''],
@@ -39,6 +40,8 @@ export class SignupComponent implements OnInit {
       // country:[''],
       // state:[''],
       // city:['']
+    },{
+      validators:[this.customPasswordCompareValidator('password','confirmPassword')]
     })
     this.signupForm.controls['email'].setValidators([Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')])
     this.signupForm.controls['phone'].setValidators([
@@ -86,7 +89,25 @@ export class SignupComponent implements OnInit {
     // console.log(this.signUpModelObj)
   }
   onEmailBlur(){
-    // this.formBlur.email = true
+    this.formBlur.email = true
+  }
+  private customPasswordCompareValidator(passwordControlName:string,cPasswordControlName:string):ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const formGroup =  control as FormGroup
+      const valueOfPAssword = formGroup.get(passwordControlName)?.value
+      const valueOfCPassword = formGroup.get(cPasswordControlName)?.value
+      if (valueOfPAssword === valueOfCPassword)
+      {
+        return null
+      }
+      else
+      {
+        return {
+          passwordsDoNotMatch: true
+        }
+      }  
+    }
+
   }
 
 }

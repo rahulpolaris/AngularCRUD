@@ -42,7 +42,7 @@
             <span class="text-danger" *ngIf="signupForm.hasError('required','email')">*Email ID is
               Required</span>
           <span class="text-danger"
-              *ngIf="signupForm.controls['email'].dirty && signupForm.hasError('pattern','email')">not a
+              *ngIf="(signupForm.controls['email'].dirty && signupForm.hasError('pattern','email')) && formBlur.email">not a
               valid email</span>
 
           </div>
@@ -74,11 +74,16 @@
           <div class="form-group">
             <label for="confirm_password">Confirm Password</label
             ><input
+            placeholder=" Confirm  Password"
               type="password"
               formControlName="confirmPassword"
               class="form-control"
               name="confirm_password"
             />
+            <span class="text-danger"
+            *ngIf="signupForm.controls['confirmPassword'].dirty && signupForm.hasError('passwordsDoNotMatch')">Passwords Do Not Match
+            </span>
+
           </div>
           <button (click)="onSignUpButtonClick()" class="btn btn-primary" [disabled]="!signupForm.valid">SignUP</button>
         </form>
