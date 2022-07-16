@@ -34,19 +34,32 @@
               id="exampleInputEmail1"
               aria-describedby="emailHelp"
               placeholder="Enter email"
+              (blur)="onEmailBlur()"
             />
             <div id="emailHelp" class="muted-text">
               We'll never share your email with anyone else.
             </div>
+            <span class="text-danger" *ngIf="signupForm.hasError('required','email')">*Email ID is
+              Required</span>
+          <span class="text-danger"
+              *ngIf="signupForm.controls['email'].dirty && signupForm.hasError('pattern','email')">not a
+              valid email</span>
+
           </div>
           <div class="form-group">
             <label for="phone">Phone</label
-            ><input
+            ><input appInputnumber
               formControlName="phone"
               type="text"
               name="phone"
               class="form-control"
             />
+            <span class="text-danger" *ngIf="signupForm.hasError('required','phone')">*phone number is
+              Required</span> <br>
+          <span class="text-danger"
+              *ngIf="signupForm.controls['phone'].dirty && signupForm.get('phone')?.errors">should be at
+              least 10 digits</span>
+
           </div>
           <div class="form-group">
             <label for="exampleInputPassword1">Password</label>
@@ -67,7 +80,7 @@
               name="confirm_password"
             />
           </div>
-          <button type="submit" class="btn btn-primary">Submit</button>
+          <button (click)="onSignUpButtonClick()" class="btn btn-primary" [disabled]="!signupForm.valid">SignUP</button>
         </form>
       </div>
     </div>

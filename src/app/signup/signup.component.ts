@@ -7,8 +7,10 @@ import {
   ValidatorFn,
   ValidationErrors,
 } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ApiService } from '../shared/Services/api.service';
-import { EmployeeModel } from '../shared/Models/employee-dashboard.model';
+// import { EmployeeModel } from '../shared/Models/employee-dashboard.model';
+import { SignUpModel } from './signUp.model';
 
 
 @Component({
@@ -19,10 +21,11 @@ import { EmployeeModel } from '../shared/Models/employee-dashboard.model';
 })
 export class SignupComponent implements OnInit {
   signupForm!: FormGroup;
-  employeeModelObj!:EmployeeModel
+  signUpModelObj:SignUpModel =  new SignUpModel()
+  formBlur!:{email:boolean,firstName:boolean,phone:boolean,password:boolean,cPassword:boolean}
   
 
-  constructor(private formBuilder : FormBuilder, private api: ApiService) { }
+  constructor(private formBuilder : FormBuilder, private api: ApiService, private router: Router) { }
 
   ngOnInit(): void {
     this.signupForm = this.formBuilder.group({
@@ -30,29 +33,60 @@ export class SignupComponent implements OnInit {
       lastName:[''],
       email:[''],
       phone:[''],
-      dob:[''],
+      // dob:[''],
       password:[''],
       confirmPassword:[''],
-      country:[''],
-      state:[''],
-      city:['']
+      // country:[''],
+      // state:[''],
+      // city:['']
     })
+    this.signupForm.controls['email'].setValidators([Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')])
+    this.signupForm.controls['phone'].setValidators([
+      Validators.minLength(10),
+      Validators.required
+    ]);
+    this.signupForm.controls['firstName'].setValidators([Validators.required])
+  //  this.formBlur.email = false
   }
-  postEmployee():void{
-  this.employeeModelObj.firstname = this.signupForm.value.firstName
-  this.employeeModelObj.lastname = this.signupForm.value.lastName
-  this.employeeModelObj.email = this.signupForm.value.email
-  this.employeeModelObj.phone = this.signupForm.value.phone
-  this.employeeModelObj.date_of_birth = this.signupForm.value.dob
-  this.employeeModelObj.country = this.signupForm.value.country
-  this.employeeModelObj.state = this.signupForm.value.state
-  this.employeeModelObj.city = this.signupForm.value.city
+  // postEmployee():void{
+  // this.signUpModelObj.date_of_birth = this.signupForm.value.dob
+  // this.signUpModelObj.country = this.signupForm.value.country
+  // this.signUpModelObj.state = this.signupForm.value.state
+  // this.signUpModelObj.city = this.signupForm.value.city
   // const signUpPayLoad = new Map()
 
-  this.api
-  }
+  
+  // }
   onSignUpButtonClick():void {
-    this.api
+    this.signUpModelObj.firstname = this.signupForm.value.firstName
+    this.signUpModelObj.lastname = this.signupForm.value.lastName
+    this.signUpModelObj.email = this.signupForm.value.email
+    this.signUpModelObj.phone = this.signupForm.value.phone
+    this.signUpModelObj.password = this.signupForm.value.password
+    console.log(this.signUpModelObj)
+  
+    this.api.postEmployee(this.signUpModelObj).subscribe(res=>{
+      console.log(res)
+      if(res?.emailExists)
+      {
+        alert("User Already Exists with this email")
+      }
+      else{
+        
+        alert("SignUp Successful")
+        this.signupForm.reset()
+        this.router.navigate(['login'])
+      }
+    },err=>{
+      if(err){
+        console.log(err)
+        alert("something  went wrong")
+      }
+    })
+    // console.log(this.signUpModelObj)
+  }
+  onEmailBlur(){
+    // this.formBlur.email = true
   }
 
 }

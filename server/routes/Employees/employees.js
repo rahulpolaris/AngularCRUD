@@ -18,47 +18,85 @@ Employees.get("/employees", async (req, res) => {
 Employees.post("/employees", async (req, res) => {
   console.log(req.body);
   console.log(req.headers);
-  const {
-    firstname,
-    lastname,
-    email,
-    phone,
-    date_of_birth,
-    country,
-    state,
-    city,
-  } = req.body;
   const emp_id = uuidv4()
-  let dob  = date_of_birth
-  if (date_of_birth.length === 0)
+
+  if (!req.body.password)
   {
-    dob = null
+
+      const {
+        firstname,
+        lastname,
+        email,
+        phone,
+        date_of_birth,
+        country,
+        state,
+        city,
+      } = req.body;
+      let dob  = date_of_birth
+      if (date_of_birth.length === 0)
+      {
+        dob = null
+      }
+      else
+      {
+        dob = `'${date_of_birth}'`
+      }
+    
+      connection.query(
+        `INSERT INTO employees (emp_id,firstname,lastname,email,phone,date_of_birth,country,state,city) VALUES ( '${emp_id}','${firstname}', '${lastname}', '${email}', '${phone}', ${dob},  '${country}', '${state}', '${city}');INSERT INTO employees_passwords (password,employee_id) VALUES ('!Password123','${emp_id}');`,
+        (err, results, fields) => {
+          if (!err) {
+            res.status(200).json(results);
+            //  results should be like this
+            //  {
+            //     "fieldCount": 0,
+            //     "affectedRows": 1,
+            //     "insertId": 3,
+            //     "info": "",
+            //     "serverStatus": 2,
+            //     "warningStatus": 0
+            // }
+          } else {
+            console.log(err);
+            res.send("sorry something went wrong! Please Check Console");
+          }
+        }
+      );
   }
   else
   {
-    dob = `'${date_of_birth}'`
-  }
+    const {firstname,lastname,email,phone,password} = req.body
+    connection.promise().query(`select * from employees where email = '${email}'`).then(([results,fields])=>{
+        console.log("Here are the results",results)
+        if(results.length === 0)
+        {
+            connection.query(
+                `INSERT INTO employees (emp_id,firstname,lastname,email,phone) VALUES ( '${emp_id}','${firstname}', '${lastname}', '${email}', '${phone}');INSERT INTO employees_passwords (password,employee_id) VALUES ('${password}','${emp_id}');`,
+                (err, results, fields) => {
+                  if (!err) {
+                    res.status(200).json(results);
+                  } else {
+                    console.log(err);
+                    res.send("sorry something went wrong! Please Check Console");
+                  }
+                }
+              );    
+        
 
-  connection.query(
-    `INSERT INTO employees (emp_id,firstname,lastname,email,phone,date_of_birth,country,state,city) VALUES ( '${emp_id}','${firstname}', '${lastname}', '${email}', '${phone}', ${dob},  '${country}', '${state}', '${city}');INSERT INTO employees_passwords (password,employee_id) VALUES ('!Password123','${emp_id}');`,
-    (err, results, fields) => {
-      if (!err) {
-        res.status(200).json(results);
-        //  results should be like this
-        //  {
-        //     "fieldCount": 0,
-        //     "affectedRows": 1,
-        //     "insertId": 3,
-        //     "info": "",
-        //     "serverStatus": 2,
-        //     "warningStatus": 0
-        // }
-      } else {
-        console.log(err);
-        res.send("sorry something went wrong! Please Check Console");
-      }
-    }
-  );
+        }
+        else
+        {
+            res.json({emailExists:true})
+        }
+    }).catch(err=>{
+        if(err){
+            console.log(err)
+        }
+    })
+
+
+  }
 
   // res.status(200).json({sent:"Successful"})
 });
