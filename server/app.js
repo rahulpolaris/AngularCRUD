@@ -3,14 +3,39 @@ const app = express();
 const path = require("path");
 const PORT = process.env.PORT || 5000
 const { v4: uuidv4 } = require('uuid');
+const cookieParser = require("cookie-parser");
+const session = require('express-session')
+const MySQLStore = require('express-mysql-session')(session)
+const options = {
+	host: 'localhost',
+	port: 3306,
+  user: 'testuser',
+  database: 'crudemployeesdb',
+  password:'Password1!'
+};
+
+
 
 ;
 const { urlencoded } = require("express");
+const sessionStore = new MySQLStore(options);
+const sessionConfigObj= {
+  key:'session cookie name',
+  secret: "super hard to guess string",
+  cookie:{},
+  resave:false,
+  saveUninitialized : false,
+  store:sessionStore
+}
+
 
 
 app.use(express.static(path.join(__dirname, "public")));
 app.use(urlencoded({ extended: true }));
 app.use(express.json());
+app.use(cookieParser());
+app.use(session(sessionConfigObj))
+
 
 
 
@@ -42,6 +67,7 @@ app.use("/",FilteredEmployees)
 
 app.listen(PORT, async () => {
     console.log("listening on port:" +  PORT+ "-----------------------------------------------------");
+    // console.log(uuidv4())
     // console.log(uuidv4())
     // console.log(uuidv4())
     // console.log(uuidv4())

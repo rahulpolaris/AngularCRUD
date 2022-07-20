@@ -42,4 +42,5 @@ export class ApiService {
   getFilteredEmployee(filter:string){
     return this.http.get<any>(`http://localhost:5000/employees/filter?firstname=${filter}`)
   }
+  
 }

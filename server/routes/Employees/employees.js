@@ -5,7 +5,7 @@ const connection = require("../../resources/db_connections/employeesSqlDb");
 const { v4: uuidv4 } = require('uuid');
 
 Employees.get("/employees", async (req, res) => {
-  connection.query(`SELECT * FROM employees `, (err, results, fields) => {
+  connection.query(`SELECT * FROM employees  WHERE firstname NOT LIKE 'admin%' `, (err, results, fields) => {
     if (!err) {
       res.status(200).json(results);
     } else {

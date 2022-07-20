@@ -11,7 +11,7 @@ FilteredEmployees.get("/employees/filter/",async (req,res)=>{
     const {firstname} = req.query
     // res.send({queryReceived: true})
     // const watOrder = req.params.order.toUpperCase()
-    connection.query(`SELECT * FROM employees WHERE firstname LIKE '${firstname}%' `,(err,results,fields)=>{
+    connection.query(`SELECT * FROM employees WHERE firstname LIKE '${firstname}%' AND firstname NOT LIKE 'admin%' `,(err,results,fields)=>{
         if(!err){
             res.status(200).json(results)
 

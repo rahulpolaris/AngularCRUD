@@ -15,10 +15,15 @@ import {
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
+  loginForm !: any
 
-  constructor() { }
+  constructor(private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
+    this.loginForm = this.formBuilder.group({
+      email:[''],
+      password:['']
+    })
   }
 
 }

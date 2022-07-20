@@ -8,7 +8,7 @@ const connection = require('../../resources/db_connections/employeesSqlDb')
 SortedEmployees.get("/employees/:sortby/:order",async (req,res)=>{
     console.log(req.params)
     const watOrder = req.params.order.toUpperCase()
-    connection.query(`SELECT * FROM employees ORDER BY ${req.params.sortby} ${watOrder}`,(err,results,fields)=>{
+    connection.query(`SELECT * FROM employees WHERE firstname NOT LIKE 'admin%' ORDER BY ${req.params.sortby} ${watOrder} `,(err,results,fields)=>{
         if(!err){
             res.status(200).json(results)
 
