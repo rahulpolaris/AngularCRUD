@@ -54,5 +54,17 @@ export class UserProfileComponent implements OnInit {
     })
 
   }
+  getMeOutOfHere(){
+    this.authService.logOutUser(this.routeEmailParam.value.email).subscribe((res:any)=>{
+      if(res?.sessionDestroyed)
+      {
+        alert("User Has been logged Out")
+        this.router.navigate(['login'])
+      }
+      else{
+        alert("something went wrong")
+      }
+    })
+  }
 
 }

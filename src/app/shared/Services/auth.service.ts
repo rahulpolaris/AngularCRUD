@@ -28,4 +28,7 @@ export class AuthService {
   getUserDetail(email:string):any {
     return this.http.get(`http://localhost:5000/users/${email}`, {withCredentials:true})
   }
+  logOutUser(email:string):any {
+    return this.http.get(`http://localhost:5000/users/${email}/logout`,{withCredentials:true})
+  }
 }

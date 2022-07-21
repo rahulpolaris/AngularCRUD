@@ -106,12 +106,18 @@ User.get("/users/:email", (req, res) => {
 });
 User.get("/users/:email/logout", (req, res) => {
   const { email } = req.params;
-  if (req?.session?.email) {
+  console.log(req.session.email,req.params.email)
+  if (req?.session?.email && req.session.email === email) {
     req.session.destroy((err) => {
       console.log(err);
-      res.send({ sessionDestroyed: true });
+      console.log("inside session destroyed")
+      res.status(200).send({ sessionDestroyed: true });
     });
     return;
+  }
+  else{
+    console.log("inside session not destroyed ")
+    res.status(200).send({error:"something went wrong"})
   }
 });
 module.exports = User;
