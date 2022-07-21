@@ -16,7 +16,7 @@
                       <label for="exampleInputPassword1">Password</label>
                       <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" formControlName="password">
                     </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button [disabled]="!loginForm.valid" class="btn btn-primary" (click)="handleLoginSubmit()">Submit</button>
                     <a routerLink="/signup"> a new user? Click here to SignUp</a>
                   </form>
             </div>

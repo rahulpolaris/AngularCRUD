@@ -12,6 +12,7 @@ import { AgeValidationDirective } from './shared/Directives/age-validation.direc
 import { DobFormatterDirective } from './shared/Directives/dob-formatter.directive';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { SignupComponent } from './signup/signup.component';
     AgeValidationDirective,
     DobFormatterDirective,
     LoginComponent,
-    SignupComponent
+    SignupComponent,
+    UserProfileComponent
   ],
   imports: [
     BrowserModule,

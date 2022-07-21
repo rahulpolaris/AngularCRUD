@@ -2,24 +2,27 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
-   isAdminLoggedIn: boolean = false
-   isUserLoggedIn: boolean = false
-  constructor(private http:HttpClient) { 
-    
-  }
-  login(email:string, password:string):void {
-    if (email!=='admin')
-    {
-      
+  isAdminLoggedIn: boolean = false;
+  isUserLoggedIn: boolean = false;
+  constructor(private http: HttpClient) {}
+  postLoginCredentials(val: { email: string; password: string }): any {
+    if (val.email !== 'admin') {
+      return this.http.post('http://localhost:5000/users/login', val,{ withCredentials: true });
+    } else {
+      return { admin: 'not configured' };
     }
   }
-  setUserLoggedIn(value:boolean){
-    this.isUserLoggedIn = value
+  getLoginStatus():any {
+    return this.http.get('http://localhost:5000/users/login',{withCredentials:true})
   }
-  setAdminLoggedIn(value:boolean){
-    this.isAdminLoggedIn = value
+  setIsUserLoggedIn(value: boolean) {
+    this.isUserLoggedIn = value;
   }
+  setIsAdminLoggedIn(value: boolean) {
+    this.isAdminLoggedIn = value;
+  }
+
 }

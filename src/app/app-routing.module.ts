@@ -4,12 +4,16 @@ import { EmployeeDashboardComponent } from './employee-dashboard/employee-dashbo
 import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './shared/guards/auth.guard';
 import { SignupComponent } from './signup/signup.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
 
 const routes: Routes = [
   {path:'',component:LoginComponent},
   {path:'login',component:LoginComponent},
   {path:'signup',component:SignupComponent},
-  {path:'dashboard',component:EmployeeDashboardComponent, canActivate:[AuthGuard]}
+  {path:'dashboard',component:EmployeeDashboardComponent},
+  {path:'users/:email',component:UserProfileComponent, canActivate:[AuthGuard]}
+
+
 ];
 
 @NgModule({
