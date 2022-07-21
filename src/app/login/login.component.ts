@@ -8,6 +8,7 @@ import {
   ValidationErrors,
 } from '@angular/forms';
 import { AuthService } from '../shared/Services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +18,7 @@ import { AuthService } from '../shared/Services/auth.service';
 export class LoginComponent implements OnInit {
   loginForm!: any;
 
-  constructor(private formBuilder: FormBuilder, private auth: AuthService) {}
+  constructor(private formBuilder: FormBuilder, private auth: AuthService, private router: Router) {}
 
   ngOnInit(): void {
     this.checkLoginStatus()
@@ -34,14 +35,18 @@ export class LoginComponent implements OnInit {
       if (Object.keys(res).includes('emailExists')) {
         if (res.emailExists === false) {
           window.alert('this email  does not exist');
+          this.loginForm.reset()
         } else {
           if (res?.passwordMatch === false){
             alert('wrong password')
+            this.loginForm.controls['password'].reset()
           }
           else if(res?.passwordMatch === true)
           {
             alert('sign in successful')
+            
             //here we redirect to user account
+            this.router.navigate([`users/${val.email}`])
           }
         }
       }
@@ -52,11 +57,13 @@ export class LoginComponent implements OnInit {
       if(Object.keys(res).includes('isSessionActive'))
       {
         if(res.isSessionActive)
-        {
-          window.alert("a Session is already in progress")
+        { 
+          const sessionEmail =  res.sessionEmail
+          this.router.navigate([`users/${sessionEmail}`])
         }
       }
     })
+    return 
   }
   handleLoginSubmit() {
     const loginPayLoad = {email: this.loginForm.value.email, password: this.loginForm.value.password }

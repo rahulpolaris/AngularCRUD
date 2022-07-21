@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { AuthGuard } from '../guards/auth.guard';
 
 @Injectable({
   providedIn: 'root',
@@ -24,5 +25,7 @@ export class AuthService {
   setIsAdminLoggedIn(value: boolean) {
     this.isAdminLoggedIn = value;
   }
-
+  getUserDetail(email:string):any {
+    return this.http.get(`http://localhost:5000/users/${email}`, {withCredentials:true})
+  }
 }

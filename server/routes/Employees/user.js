@@ -21,7 +21,9 @@ let corsOptions = {
 
 User.get("/users/login", (req, res) => {
   if (req?.session?.email) {
-    res.status(200).json({ isSessionActive: true, sessionEmail: req.session.email });
+    res
+      .status(200)
+      .json({ isSessionActive: true, sessionEmail: req.session.email });
   } else {
     res.status(200).json({ isSessionActive: false });
   }
@@ -33,14 +35,14 @@ User.get("/users/login", (req, res) => {
 // SignUp.post("/signup",)
 User.post("/users/login", (req, res) => {
   console.log(req.body);
-  console.log("~~~~~~~~~~~~~~~~~");
+  // console.log("~~~~~~~~~~~~~~~~~");
   const { email, password: posted_password } = req.body;
   if (email !== "admin") {
     connection
       .promise()
       .query(`SELECT * from employees WHERE email = '${email}'`)
       .then(([rows, fields]) => {
-        console.log("rows are:~~~~~~~~~~~", rows);
+        // console.log("rows are:~~~~~~~~~~~", rows);
         if (rows.length === 0) {
           res.json({ emailExists: false });
         } else {
@@ -48,7 +50,7 @@ User.post("/users/login", (req, res) => {
         }
       })
       .then((rows) => {
-        console.log(rows);
+        // console.log(rows);
         if (rows !== undefined) {
           connection.query(
             `SELECT * from employees_passwords WHERE employee_id = '${rows[0].emp_id}'`,
@@ -95,9 +97,11 @@ User.get("/users/:email", (req, res) => {
           console.log(err);
           res.status(500).json({ error: "something went wrong son" });
         });
+    } else {
+      res.send({ isGoodRequest: false, isUserLoggedIn: false });
     }
   } else {
-    res.status(404).send({ isGoodRequest: false, isUserLoggedIn: "false" });
+    res.status(200).send({ isGoodRequest: false, isUserLoggedIn: false });
   }
 });
 User.get("/users/:email/logout", (req, res) => {
