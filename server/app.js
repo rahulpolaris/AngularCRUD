@@ -23,7 +23,7 @@ const sessionStore = new MySQLStore(options);
 const sessionConfigObj= {
   key:'session cookie name',
   secret: "super hard to guess string",
-  cookie:{maxAge:10000},
+  cookie:{maxAge:1000*3600},
   resave:false,
   saveUninitialized : false,
   store:sessionStore

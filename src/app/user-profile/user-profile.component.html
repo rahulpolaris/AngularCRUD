@@ -1,4 +1,36 @@
-
-<h2><b>Name:</b>{{user.firstname}} {{user.lastname}}</h2>
-<h2><b>email:</b><span>{{user.email}}</span></h2>
-<button class="btn btn-danger" (click)="getMeOutOfHere()">Log out</button>
+<div class="container">
+    <div class="title">
+        <h3 class="label">First name:</h3>
+        <h4 class="info">{{user.firstname}}</h4>
+    </div>
+    <div class="desc">
+        <h3 class="label">Last name:</h3>
+        <h4 class="info">{{user.lastname}}</h4>
+    </div>
+    <div class="desc">
+        <h3 class="label">Email: </h3>
+        <h4 class="info">{{user.email}}</h4>
+    </div>
+    <div class="desc">
+        <h3 class="label">Phone:</h3>
+        <h4 class="info">{{user.phone}}</h4>
+    </div>
+    <div class="desc">
+        <h3 class="label">Country:</h3>
+        <h4 class="info">{{user.country}}</h4>
+    </div>
+    <div class="desc">
+        <h3 class="label">State:</h3>
+        <h4 class="info">{{user.state}}</h4>
+    </div>
+    <div class="desc">
+        <h3 class="label">City:</h3>
+        <h4 class="info">{{user.city}}</h4>
+    </div>
+    <div class="desc">
+        <h3 class="label">Date of Birth:</h3>
+        <h4 class="info" >{{user.date_of_birth}}</h4>
+    </div>
+    
+</div>
+<button class="btn btn-danger container" (click)="getMeOutOfHere()">Log out</button>

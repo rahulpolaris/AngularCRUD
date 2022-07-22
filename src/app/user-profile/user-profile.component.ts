@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthGuard } from '../shared/guards/auth.guard';
+import { EmployeeModel } from '../shared/Models/employee-dashboard.model';
 import { AuthService } from '../shared/Services/auth.service';
 
 @Component({
@@ -10,15 +11,13 @@ import { AuthService } from '../shared/Services/auth.service';
 })
 export class UserProfileComponent implements OnInit {
   routeEmailParam!:any
-  user!:any
+  user!:EmployeeModel 
 
   constructor(private activeRoute: ActivatedRoute, private router: Router, private authService : AuthService) { }
 
   ngOnInit(): void {
-    // this.authService.getLoginStatus().subscribe((res:any) =>{
-
-    // })
-    // this.checkLoginStatus()
+    this.user = new EmployeeModel
+   
     this.routeEmailParam= this.activeRoute.params
     console.log(this.routeEmailParam.value.email)
     this.getUserDetails()
@@ -44,7 +43,14 @@ export class UserProfileComponent implements OnInit {
        if(Object.keys(res).includes('isUserLoggedIn')){
         if(res.isUserLoggedIn){
           console.log(res.rows)
-          this.user = res.rows[0]
+          this.user.firstname = res.rows[0].firstname
+          this.user.lastname = res.rows[0].lastname
+          this.user.email = res.rows[0].email
+          this.user.phone = res.rows[0].phone
+          this.user.date_of_birth = res.rows[0].date_of_birth
+          this.user.country = res.rows[0].country
+          this.user.state = res.rows[0].state
+          this.user.city = res.rows[0].city
         
         }
         else{

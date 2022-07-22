@@ -1,0 +1,26 @@
+.container {
+display: grid;
+grid-template-columns: 1fr 1fr;
+grid-template-rows: auto;
+}
+.desc,.title{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 20px;
+    border: 2px solid black;
+    border-radius: 10px;
+    background-color: rgb(169, 169, 169);
+}
+.label{
+    font-weight: 600;
+    padding: 10px;
+}
+.btn{
+    margin: 0 auto;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    padding: 15px;
+}

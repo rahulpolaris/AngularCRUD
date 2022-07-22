@@ -19,6 +19,10 @@ export class AuthService {
   getLoginStatus():any {
     return this.http.get('http://localhost:5000/users/login',{withCredentials:true})
   }
+  async getSessionStatus():Promise<any> {
+    return this.http.get('http://localhost:5000/users/login',{withCredentials:true}).toPromise()
+  }
+  
   setIsUserLoggedIn(value: boolean) {
     this.isUserLoggedIn = value;
   }
