@@ -29,8 +29,109 @@
     </div>
     <div class="desc">
         <h3 class="label">Date of Birth:</h3>
-        <h4 class="info" >{{user.date_of_birth}}</h4>
+        <h4 class="info" appDobFormatter>{{user.date_of_birth}}</h4>
     </div>
-    
+
 </div>
 <button class="btn btn-danger container" (click)="getMeOutOfHere()">Log out</button>
+<button class="btn btn-warning container" data-bs-toggle="modal" data-bs-target="#exampleModal">Edit Profile</button>
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Employee Detail</h5>
+                <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="formValue">
+                    <div class="mb-3">
+                        <label for="firstName" class="form-label">First Name</label>
+                        <input type="text" class="form-control" id="FirstName" aria-describedby="emailHelp"
+                            formControlName="firstName">
+                    </div>
+                    <div class="mb-3">
+                        <label for="lastName" class="form-label">Last Name</label>
+                        <input type="text" class="form-control" id="LastName" formControlName="lastName">
+                    </div>
+                    <div class="mb-3">
+                        <label for="Email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="Email" formControlName="email"
+                            (blur)="onEmailBlur()">
+                        <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div><br>
+                        <span class="text-danger" *ngIf="formValue.hasError('required','email')">*Email ID is
+                            Required</span>
+                        <span class="text-danger"
+                            *ngIf="formValue.controls['email'].dirty && formValue.hasError('pattern','email') && formBlur.email">not
+                            a
+                            valid email</span>
+
+
+                    </div>
+                    <div class="mb-3">
+                        <label for="Phone" class="form-label">Phone</label>
+                        <input type="text" appInputnumber class="form-control" id="Phone" formControlName="phone">
+                        <span class="text-danger" *ngIf="formValue.hasError('required','phone')">*phone number is
+                            Required</span> <br>
+                        <span class="text-danger"
+                            *ngIf="formValue.controls['phone'].dirty && formValue.get('phone')?.errors">should be at
+                            least 10 digits</span>
+
+
+                    </div>
+                    <div class="mb-3">
+                        <label for="Date_of_birth" class="form-label">Date OF Birth:</label>
+                        <input type="date" formControlName="date_of_birth" class="form-control" id="Date_of_birth"
+                            (change)="onDOBChange()">
+                        <span class="text-danger"
+                            *ngIf="formValue.controls['date_of_birth'].dirty && formValue.hasError('wrongDate')">cant be
+                            less than 10 and more than 120
+                        </span>
+
+                    </div>
+                    <!-- <div class="mb-3">
+                        <label for="Age" class="form-label">Age</label>
+                        <input type="number" class="form-control" id="Age" formControlName="age" appAgeValidation>
+                        <span class="text-danger"
+                            *ngIf="formValue.controls['age'].dirty && formValue.hasError('wrongAge')">age must be atleast 10
+                            </span>
+
+
+                    </div> -->
+                    <div class="mb-3">
+                        <label for="countries" class="form-label">Choose a Country:</label>
+                        <select id="countries" name="countries" formControlName="countryname"
+                            (change)="onCountryChange($event)" class="form-control">
+                            <option *ngFor=" let country of countries" [ngValue]="country">{{country.name}}</option>
+                        </select><br>
+                    </div>
+                    <div class="mb-3">
+                        <label for="states" class="form-label">Choose a State:</label>
+                        <select id="states" [disabled]="true" name="states" formControlName="statename"
+                            (change)="onStateChange($event)" class="form-control">
+                            <option *ngFor=" let state of states" [ngValue]="state">{{state.name}}</option>
+                        </select><br>
+                    </div>
+                    <div class="mb-3">
+                        <label for="cities" class="form-label">Choose a City:</label>
+                        <select id="cities" name="cities" formControlName="cityname" class="form-control">
+                            <option *ngFor=" let city of cities" [ngValue]="city">{{city.name}}</option>
+                        </select><br>
+                    </div>
+
+
+                    <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
+                </form>
+                <!-- <form action="#">
+                    <input type="text" [(ngModel)]="testInput" name="testinput">
+                </form> -->
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="closebutton" class="btn btn-secondary" data-bs-dismiss="modal" (click)="resetOnClose()">Close</button>
+                <button type="button"  class="btn btn-primary" [disabled]="!formValue.valid">update</button>
+            </div>
+        </div>
+    </div>
+</div>
