@@ -22,7 +22,7 @@ import { CscapiService } from '../shared/Services/cscapi.service';
 })
 export class UserProfileComponent implements OnInit {
   routeEmailParam!:any
-  user!:any 
+  user:EmployeeModel =  new EmployeeModel(); 
   formValue!: FormGroup;
 
   employeeModelObj: EmployeeModel = new EmployeeModel();
@@ -120,15 +120,16 @@ this.getStates(countryObj.id)
        if(Object.keys(res).includes('isUserLoggedIn')){
         if(res.isUserLoggedIn){
           console.log(res.rows)
-          // this.user.firstname = res.rows[0].firstname
-          // this.user.lastname = res.rows[0].lastname
-          // this.user.email = res.rows[0].email
-          // this.user.phone = res.rows[0].phone
-          // this.user.date_of_birth = res.rows[0].date_of_birth
-          // this.user.country = res.rows[0].country
-          // this.user.state = res.rows[0].state
-          // this.user.city = res.rows[0].city
-          this.user = res.rows[0]
+          this.user.id = res.rows[0].emp_id
+          this.user.firstname = res.rows[0].firstname
+          this.user.lastname = res.rows[0].lastname
+          this.user.email = res.rows[0].email
+          this.user.phone = res.rows[0].phone
+          this.user.date_of_birth = res.rows[0].date_of_birth
+          this.user.country = res.rows[0].country
+          this.user.state = res.rows[0].state
+          this.user.city = res.rows[0].city
+          // this.user = res.rows[0]
         
         }
         else{
@@ -151,8 +152,10 @@ this.getStates(countryObj.id)
     })
   }
 
-  onEdit(row: any) {
-    const date : Date = new Date(row.date_of_birth)
+  onEdit() {
+    console.log("Edit Profile Triggederd")
+    console.log(this.user)
+    const date : Date = new Date(this.user.date_of_birth)
     const monthStr = (date:Date):string =>{
       const m = date.getUTCMonth()+1
       if(m<10)
@@ -179,16 +182,16 @@ this.getStates(countryObj.id)
     }
     const DateStr = `${date.getFullYear()}-${monthStr(date)}-${dateStr(date)}`
     this.getCountries()
-    this.employeeModelObj.id = row.emp_id;
-    this.formValue.controls['firstName'].setValue(row.firstname);
-    this.formValue.controls['lastName'].setValue(row.lastname);
-    this.formValue.controls['email'].setValue(row.email);
-    this.formValue.controls['phone'].setValue(row.phone);
+    this.employeeModelObj.id = this.user.id;
+    this.formValue.controls['firstName'].setValue(this.user.firstname);
+    this.formValue.controls['lastName'].setValue(this.user.lastname);
+    this.formValue.controls['email'].setValue(this.user.email);
+    this.formValue.controls['phone'].setValue(this.user.phone);
     this.formValue.controls['date_of_birth'].setValue(DateStr)
-    // this.formValue.controls['age'].setValue(row.age);
-    this.formValue.controls['countryname'].setValue(row.country);
-    this.formValue.controls['statename'].setValue(row.state);
-    this.formValue.controls['cityname'].setValue(row.city);
+    // this.formValue.controls['age'].setValue(this.user.age);
+    this.formValue.controls['countryname'].setValue(this.user.country);
+    this.formValue.controls['statename'].setValue(this.user.state);
+    this.formValue.controls['cityname'].setValue(this.user.city);
     
   }
   onUpdateEmployee() {

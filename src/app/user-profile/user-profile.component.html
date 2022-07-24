@@ -34,7 +34,7 @@
 
 </div>
 <button class="btn btn-danger container" (click)="getMeOutOfHere()">Log out</button>
-<button class="btn btn-warning container" data-bs-toggle="modal" data-bs-target="#exampleModal">Edit Profile</button>
+<button class="btn btn-warning container" data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="onEdit()">Edit Profile</button>
 
 
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -130,7 +130,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" id="closebutton" class="btn btn-secondary" data-bs-dismiss="modal" (click)="resetOnClose()">Close</button>
-                <button type="button"  class="btn btn-primary" [disabled]="!formValue.valid">update</button>
+                <button type="button"  class="btn btn-primary" [disabled]="!formValue.valid" (click)="onUpdateEmployee()"> Update</button>
             </div>
         </div>
     </div>
