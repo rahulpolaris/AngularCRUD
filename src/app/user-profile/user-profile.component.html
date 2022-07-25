@@ -29,7 +29,7 @@
     </div>
     <div class="desc">
         <h3 class="label">Date of Birth:</h3>
-        <h4 class="info" appDobFormatter>{{user.date_of_birth}}</h4>
+        <h4 class="info" >{{user.date_of_birth}}</h4>
     </div>
 
 </div>
@@ -135,3 +135,13 @@
         </div>
     </div>
 </div>
+
+<!-- file upload  form -->
+<form>
+    <div class="mb-3">
+      <label for="FileUpload" class="form-label">Upload Your Reports</label>
+      <input type="file" class="form-control" id="FileUpload" aria-describedby="emailHelp">
+      <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>

@@ -22,6 +22,7 @@ INSERT INTO employees (emp_id,firstname,lastname,email,phone,date_of_birth,count
 
 
 
+
  CREATE TABLE IF NOT EXISTS employees_passwords(
     pd_id INT unsigned NOT NULL AUTO_INCREMENT,
     password VARCHAR(250) NOT NULL,
@@ -38,3 +39,18 @@ INSERT INTO employees (emp_id,firstname,lastname,email,phone,date_of_birth,count
  ('Testpassword1!','fe23f372-63aa-42d9-ab1e-abda9387132b');
 
 select employees.firstname,employees_passwords.password  from employees_passwords INNER JOIN employees ON employees_passwords.employee_id = employees.emp_id;
+
+CREATE TABLE IF NOT EXISTS employee_files(
+    file_id INT unsigned NOT NULL AUTO_INCREMENT,
+    type VARCHAR(50) NOT NULL,
+    location TEXT NOT NULL,
+    size VARCHAR(60) NOT NULL,
+    name VARCHAR(100) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    emp_id VARCHAR(120) NOT NULL,
+    PRIMARY KEY (file_id),
+    FOREIGN KEY (emp_id) REFERENCES employees(emp_id) ON DELETE CASCADE
+
+    
+);

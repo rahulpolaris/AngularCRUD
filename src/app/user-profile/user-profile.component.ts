@@ -215,6 +215,7 @@ this.getStates(countryObj.id)
         ref?.click();
         this.formValue.reset();
         // this.getAllEmployee();
+        this.getUserDetails()
       });
   }
 
