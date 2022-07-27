@@ -137,11 +137,13 @@
 </div>
 
 <!-- file upload  form -->
-<form>
-    <div class="mb-3">
+<form (ngSubmit)="onFileSubmit($event)" [formGroup]="uploadForm">
+    <div class="mb-3"
+    >
+    <input type="hidden" name="emp_id" [value]="user.id" formControlName = "emp_id">
       <label for="FileUpload" class="form-label">Upload Your Reports</label>
-      <input type="file" class="form-control" id="FileUpload" aria-describedby="emailHelp">
-      <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+      <input type="file" class="form-control" id="file" name="file" [multiple]="false"  aria-describedby="FileUpload" [accept]="['.xls','.pdf','.jpg','.jpeg','.doc','.docx']" (change)="onFileSelect($event)">
+      <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
     </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button  class="btn btn-primary" type="submit">Upload</button>
   </form>

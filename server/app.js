@@ -48,6 +48,7 @@ const Employees = require("./routes/Employees/employees");
 const SortedEmployees = require("./routes/Employees/sortedEmployees");
 const FilteredEmployees = require("./routes/Employees/filteredEmployees");
 const User = require("./routes/Employees/user");
+const UploadedFiles = require("./routes/Employees/uploadFiles")
 
 let whitelist = ['http://localhost:4200','http://localhost:80','http://localhost:5000'];
         let corsOptions = {
@@ -76,6 +77,7 @@ app.use("/",Employees)
 app.use("/",SortedEmployees)
 app.use("/",FilteredEmployees)
 app.use("/",User)
+app.use("/",UploadedFiles)
 
 app.listen(PORT, async () => {
     console.log("listening on port:" +  PORT+ "-----------------------------------------------------");
