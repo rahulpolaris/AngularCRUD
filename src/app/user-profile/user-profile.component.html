@@ -140,10 +140,31 @@
 <form (ngSubmit)="onFileSubmit($event)" [formGroup]="uploadForm">
     <div class="mb-3"
     >
-    <input type="hidden" name="emp_id" [value]="user.id" formControlName = "emp_id">
+    <input type="hidden" name="emp_id"  formControlName = "emp_id">
       <label for="FileUpload" class="form-label">Upload Your Reports</label>
       <input type="file" class="form-control" id="file" name="file" [multiple]="false"  aria-describedby="FileUpload" [accept]="['.xls','.pdf','.jpg','.jpeg','.doc','.docx']" (change)="onFileSelect($event)">
       <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
     </div>
     <button  class="btn btn-primary" type="submit">Upload</button>
   </form>
+  <table class="table mt-3">
+    <thead>
+        <th>
+            file_id
+        </th>
+        <th>file name</th>
+        <th>file type</th>
+        <th>operations</th>
+
+    </thead>
+    <tbody >
+        <tr *ngFor = "let row of (userFiles$ | async) ">
+            <td>{{row.file_id}}</td>
+            <td>{{row.originalname}}</td>
+            <td>{{row.type}}</td>
+            <td>
+            
+            </td>
+        </tr>
+    </tbody>
+  </table>

@@ -14,6 +14,7 @@ import { AuthService } from '../shared/Services/auth.service';
 import { ApiService } from '../shared/Services/api.service';
 import { CscapiService } from '../shared/Services/cscapi.service';
 import { FileTransferService } from '../shared/Services/file-transfer.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-user-profile',
@@ -27,6 +28,7 @@ export class UserProfileComponent implements OnInit {
   uploadForm!: FormGroup;
 
   employeeModelObj: EmployeeModel = new EmployeeModel();
+  userFiles$ !: Observable<any>
 
   countries!: any;
 
@@ -97,7 +99,7 @@ export class UserProfileComponent implements OnInit {
     }
     const file  =  e.target.files[0]
     this.uploadForm.get('file')?.setValue(file)
-    // this.uploadForm.get('emp_id')?.setValue(this.user.id)
+    this.uploadForm.get('emp_id')?.setValue(this.user.id)
   }
   onFileSubmit(e: any) {
     const formData =  new  FormData()
@@ -105,9 +107,17 @@ export class UserProfileComponent implements OnInit {
     formData.append('emp_id',this.uploadForm.controls['emp_id'].value)
     this.filetransfer.postFile(formData).subscribe((res:any)=>{
       console.log(res)
+      if(!res.error){
+        console.log("inside res not error")
+        this.uploadForm.reset()
+        this.getUserFiles()
+      }
     })
     // e.preventDefault()
     // this
+  }
+  getUserFiles(){
+    this.userFiles$ = this.filetransfer.getFiles(this.user.id)
   }
   resetOnClose() {
     this.formValue.reset();
@@ -151,6 +161,7 @@ export class UserProfileComponent implements OnInit {
             this.user.state = res.rows[0].state;
             this.user.city = res.rows[0].city;
             this.uploadForm.controls['emp_id'].setValue(res.rows[0].emp_id)
+            this.getUserFiles()
             // this.user = res.rows[0]
           } else {
             this.router.navigate(['login']);
