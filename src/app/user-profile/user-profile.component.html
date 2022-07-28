@@ -150,6 +150,31 @@
     </div>
     <button class="btn btn-primary" type="submit">Upload</button>
 </form>
+<div class="modal" id="updateFileModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5> Update Form</h5>
+            </div>
+            <div class="modal-body">
+
+                <form (ngSubmit)="onUpdatedFileSubmit($event)" [formGroup]="updateUploadForm">
+                    <div class="mb-3">
+                        <!-- <input type="hidden" name="emp_id" formControlName="emp_id"> -->
+                        <label for="FileUpload" class="form-label">Upload Your Reports</label>
+                        <input type="file" class="form-control" id="file" name="file" [multiple]="false" aria-describedby="FileUpload"
+                            [accept]="['.xls','.pdf','.jpg','.jpeg','.doc','.docx']" (change)="onUpdatedFileSelect($event)">
+                        <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
+                    </div>
+                    <button class="btn btn-primary" type="submit">update</button>
+                </form>
+                <button class="btn btn-danger" data-bs-dismiss="modal" (click)="resetUpdateFileForm()" > close</button>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
 <table class="table mt-3">
     <thead>
         <th>
@@ -167,7 +192,8 @@
             <td>{{row.type}}</td>
             <td>
                 <div class="custom-grid">
-                    <button class="btn btn-primary" (click)="getUserDownloadableFile(row)"> view</button> <button class="btn btn-warning">Change</button>
+                    <button class="btn btn-primary" (click)="getUserDownloadableFile(row)"> view</button> 
+                    <button class="btn btn-warning" (click)="onUpdateFileClick(row)" data-bs-toggle="modal" data-bs-target="#updateFileModal">Change</button>
                     <button class="btn btn-danger" (click)=" onDeleteFileClick(row)">Delete</button></div>
             
             </td>

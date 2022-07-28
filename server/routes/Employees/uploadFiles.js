@@ -16,11 +16,42 @@ const storage = multer.diskStorage({
       );
     }
     const uniqueSuffix =
-      Date.now() + "-" + Math.round(Math.random() * 1e9) + extensionName;
+      Date.now() + "-" + Math.round(Math.random() * 1e9) ;
     cb(null, file.fieldname + "-" + uniqueSuffix);
   },
 });
 const upload = multer({ storage: storage });
+
+const storageUpdate = multer.diskStorage({
+  destination: path.join(__dirname,"../../resources/file_storage"),
+  // filename: function(req,file,cb){
+  //   console.log("inside multers updateStroge rename function")
+  //   // const originalFileName = req.body.originalname
+  //   const originalFilelocation = req.body.location
+  //   const originalFileFormattedName = req.body.filename
+  //   // fs.unlinkSync(originalFilelocation)
+  //   cb(null,originalFileFormattedName)
+    
+
+  // }
+  filename: function (req, file, cb) {
+    console.log("inside file rename function.........",req.body)
+    let extensionName;
+    if (file) {
+      const originalFileName = file.originalname;
+      const dotPos = originalFileName.lastIndexOf(".");
+      extensionName = originalFileName.slice(
+        -(originalFileName.length - dotPos)
+      );
+    }
+    const uniqueSuffix =
+      Date.now() + "-" + Math.round(Math.random() * 1e9) ;
+    cb(null, file.fieldname + "-" + uniqueSuffix);
+  },
+
+})
+const updateUpload = multer ({storage: storageUpdate})
+
 
 UploadedFiles.post("/files", upload.single("file"), (req, res) => {
   console.log("Hitting file transfer route .......................");
@@ -44,6 +75,31 @@ UploadedFiles.post("/files", upload.single("file"), (req, res) => {
     res.status(200).send({ error: "Bad Request" });
   }
 });
+
+UploadedFiles.post("/files/wth/:emp_id/:file_id",updateUpload.single("file"),(req,res)=>{
+  console.log("hittinf wth route..................")
+  if(req?.session?.email && req?.file){
+    const emp_id = req.body.emp_id;
+    const file = req.file;
+    const file_id = req.body.file_id
+    connection
+    .promise()
+    .query(`UPDATE employee_files SET type = '${file.mimetype}', location = '${file.path}', size = '${file.size}', originalname = '${file.originalname}', filename = '${file.filename}' WHERE file_id = ${req.params.file_id} AND emp_id = '${req.params.emp_id}' `)
+    .then(([rows,fields])=>{
+      fs.unlinkSync(req.body.location)
+      console.log(rows)
+      res.status(200).send({fileUpdated:true,rows})
+    })
+    .catch(err => {
+      console.log(err)
+      res.status(err.status).send({error:err})
+    })
+    
+  }  else{
+    res.status(200).send({error:"Bad Request"})
+  }
+})
+
 
 UploadedFiles.get("/files/:emp_id", (req, res) => {
   if (req?.session?.email) {

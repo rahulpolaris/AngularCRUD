@@ -31,6 +31,8 @@ export class UserProfileComponent implements OnInit {
   user: EmployeeModel = new EmployeeModel();
   formValue!: FormGroup;
   uploadForm!: FormGroup;
+  updateUploadForm!: FormGroup;
+  fileToBeUpdated!: any
 
   employeeModelObj: EmployeeModel = new EmployeeModel();
   userFiles$ !: Observable<any>
@@ -89,6 +91,9 @@ export class UserProfileComponent implements OnInit {
       file: [''],
       emp_id: [this.user.id],
     });
+   this.updateUploadForm = this.formbuilder.group({
+    file:['']
+   })
     
 
     this.routeEmailParam = this.activeRoute.params;
@@ -106,6 +111,14 @@ export class UserProfileComponent implements OnInit {
     this.uploadForm.get('file')?.setValue(file)
     this.uploadForm.get('emp_id')?.setValue(this.user.id)
   }
+  onUpdatedFileSelect(e:any){
+    if(e.target.files.length > 1){
+      alert(" you can only upload one file at a time")
+      return
+    }
+    const file = e.target.files[0]
+    this.updateUploadForm.get('file')?.setValue(file)
+  }
   onFileSubmit(e: any) {
     const formData =  new  FormData()
     formData.append('file',this.uploadForm.controls['file'].value)
@@ -117,10 +130,29 @@ export class UserProfileComponent implements OnInit {
         this.uploadForm.reset()
         this.getUserFiles()
       }
+    },(err:any)=>{
+      console.log(err)
+      alert("something went wrond")
     })
-    // e.preventDefault()
-    // this
   }
+  onUpdatedFileSubmit(e:any){
+    console.log("inside update file submit function")
+    const formData = new FormData()
+    formData.append('file',this.updateUploadForm.controls['file'].value)
+    formData.append('emp_id',this.fileToBeUpdated.emp_id)
+    formData.append('location',this.fileToBeUpdated.location)
+    formData.append('filename',this.fileToBeUpdated.filename)
+    formData.append('file_id',this.fileToBeUpdated.file_id)
+    formData.append('originalname',this.fileToBeUpdated.originalname)
+    this.filetransfer.postFileUpdate(formData,this.fileToBeUpdated).subscribe((res:any)=>{
+      console.log(res)
+      this.getUserFiles()
+    },(err:any)=>{
+      console.log(err)
+      alert("file not updated something went wrong")
+    })
+  }
+
   onDeleteFileClick(row:any){
     this.filetransfer.deleteFile(row).subscribe((res:any)=>{
       console.log(res)
@@ -131,11 +163,17 @@ export class UserProfileComponent implements OnInit {
       alert("something went wrong")
     })
   }
+  onUpdateFileClick(row:any){
+    this.fileToBeUpdated = row
+  }
   resetOnClose() {
     this.formValue.reset();
     this.countries = [];
     this.states = [];
     this.cities = [];
+  }
+  resetUpdateFileForm(){
+    this.uploadForm.reset()
   }
   onDOBChange(): void {
     console.log(this.formValue.controls['date_of_birth'].value);
