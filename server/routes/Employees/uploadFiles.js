@@ -1,4 +1,5 @@
 const express = require("express");
+const fs = require('fs')
 const UploadedFiles = express.Router();
 const path = require("path");
 const connection = require("../../resources/db_connections/employeesSqlDb");
@@ -66,7 +67,7 @@ UploadedFiles.get("/files/:emp_id/:file_id",(req,res)=>{
   if(req?.session?.email){
     const {emp_id , file_id} = req.params
     connection.promise().query(`SELECT location FROM employee_files WHERE emp_id = '${emp_id}' AND file_id = '${file_id}'`).then(([rows,fields])=>{
-      console.log(rows,fields)
+      // console.log(rows,fields)
       const filePath = rows[0].location
       res.status(200).download(filePath)
     }).catch(err =>{
@@ -76,6 +77,29 @@ UploadedFiles.get("/files/:emp_id/:file_id",(req,res)=>{
   }
   else{
     res.status(200).send({badRequest:true})
+  }
+})
+UploadedFiles.post("/files/:emp_id/:file_id/delete",(req,res)=>{
+  const {emp_id , file_id} = req.params
+  if(req?.session?.email)
+  {
+    const file_location = req.body.location
+    fs.unlinkSync(file_location)
+    connection
+    .promise()
+    .query(`DELETE FROM employee_files WHERE emp_id = '${emp_id}' AND file_id = ${file_id}`)
+    .then(([rows,fields])=>{
+      console.log(rows)
+      res.status(200).json({isFileDeleted:true,rows:rows})
+    })
+    .catch((err)=>{
+      res.status(err.status).send({error:err})
+    })
+    
+  }
+  else{
+    res.status(200).json({error:"bad request"})
+
   }
 })
 

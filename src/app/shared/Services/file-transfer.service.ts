@@ -19,4 +19,7 @@ export class FileTransferService {
   downloadFile(data:{emp_id:string,file_id:string}):any{
     return this.http.get(`http://localhost:5000/files/${data.emp_id}/${data.file_id}`,{withCredentials:true, responseType:'blob'})
   }
+  deleteFile(data:any):any{
+    return this.http.post(`http://localhost:5000/files/${data.emp_id}/${data.file_id}/delete`,data,{withCredentials:true})
+  }
 }

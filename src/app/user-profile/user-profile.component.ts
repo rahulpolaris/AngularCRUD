@@ -121,6 +121,16 @@ export class UserProfileComponent implements OnInit {
     // e.preventDefault()
     // this
   }
+  onDeleteFileClick(row:any){
+    this.filetransfer.deleteFile(row).subscribe((res:any)=>{
+      console.log(res)
+      alert("file has been deleted")
+      this.getUserFiles()
+    },(err:any)=>{
+      console.log(err)
+      alert("something went wrong")
+    })
+  }
   resetOnClose() {
     this.formValue.reset();
     this.countries = [];
@@ -213,7 +223,7 @@ export class UserProfileComponent implements OnInit {
     const data = {emp_id:this.user.id, file_id:row.file_id}
      this.filetransfer.downloadFile(data).subscribe((res:any) =>{
      let downloadUrl =  window.URL.createObjectURL(res)
-     saveAs(downloadUrl)
+     saveAs(downloadUrl,row.originalname)
      
      },(err:any) =>{
       console.log(err)
