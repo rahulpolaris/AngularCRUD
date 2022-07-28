@@ -24,3 +24,21 @@ grid-template-rows: auto;
     justify-content: center;
     padding: 15px;
 }
+.custom-grid{
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    grid-template-rows: auto;
+
+}
+.custom-grid .btn{
+    width: 100%;
+}
+.table{
+    text-align: center;
+}
+thead{
+  padding: 20px 0;
+}
+th{
+    padding: 20px 0;
+}

@@ -15,6 +15,11 @@ import { ApiService } from '../shared/Services/api.service';
 import { CscapiService } from '../shared/Services/cscapi.service';
 import { FileTransferService } from '../shared/Services/file-transfer.service';
 import { Observable } from 'rxjs';
+import fileSaver from 'file-saver'
+const { saveAs } = fileSaver
+
+
+
 
 @Component({
   selector: 'app-user-profile',
@@ -116,9 +121,6 @@ export class UserProfileComponent implements OnInit {
     // e.preventDefault()
     // this
   }
-  getUserFiles(){
-    this.userFiles$ = this.filetransfer.getFiles(this.user.id)
-  }
   resetOnClose() {
     this.formValue.reset();
     this.countries = [];
@@ -143,6 +145,41 @@ export class UserProfileComponent implements OnInit {
   onEmailBlur(): void {
     this.formBlur.email = true;
   }
+  getCountries() {
+    this.cscapi.getCountries(null).subscribe(
+      (res) => {
+        this.countries = res;
+        // this.cities = [""]
+        // console.log(this.countries)
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+  }
+  getStates(arg: number) {
+    this.cscapi.getStates(arg).subscribe(
+      (res) => {
+        // console.log(res)
+        this.states = res;
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+  }
+  getCities(arg: number) {
+    this.cscapi.getCities(arg).subscribe(
+      (res) => {
+        this.cities = res;
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+  }
+
+
 
   getUserDetails() {
     this.authService
@@ -169,6 +206,21 @@ export class UserProfileComponent implements OnInit {
         }
       });
   }
+  getUserFiles(){
+    this.userFiles$ = this.filetransfer.getFiles(this.user.id)
+  }
+  getUserDownloadableFile(row:any){
+    const data = {emp_id:this.user.id, file_id:row.file_id}
+     this.filetransfer.downloadFile(data).subscribe((res:any) =>{
+     let downloadUrl =  window.URL.createObjectURL(res)
+     saveAs(downloadUrl)
+     
+     },(err:any) =>{
+      console.log(err)
+      alert("some error occured please check console")
+     })
+  }
+
   getMeOutOfHere() {
     this.authService
       .logOutUser(this.routeEmailParam.value.email)
@@ -238,39 +290,6 @@ export class UserProfileComponent implements OnInit {
       });
   }
 
-  getCountries() {
-    this.cscapi.getCountries(null).subscribe(
-      (res) => {
-        this.countries = res;
-        // this.cities = [""]
-        // console.log(this.countries)
-      },
-      (err) => {
-        console.log(err);
-      }
-    );
-  }
-  getStates(arg: number) {
-    this.cscapi.getStates(arg).subscribe(
-      (res) => {
-        // console.log(res)
-        this.states = res;
-      },
-      (err) => {
-        console.log(err);
-      }
-    );
-  }
-  getCities(arg: number) {
-    this.cscapi.getCities(arg).subscribe(
-      (res) => {
-        this.cities = res;
-      },
-      (err) => {
-        console.log(err);
-      }
-    );
-  }
 
   private customDobValidation(controlDobName: string): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {

@@ -29,12 +29,13 @@
     </div>
     <div class="desc">
         <h3 class="label">Date of Birth:</h3>
-        <h4 class="info" >{{user.date_of_birth}}</h4>
+        <h4 class="info">{{user.date_of_birth}}</h4>
     </div>
 
 </div>
 <button class="btn btn-danger container" (click)="getMeOutOfHere()">Log out</button>
-<button class="btn btn-warning container" data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="onEdit()">Edit Profile</button>
+<button class="btn btn-warning container" data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="onEdit()">Edit
+    Profile</button>
 
 
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -129,8 +130,10 @@
 
             </div>
             <div class="modal-footer">
-                <button type="button" id="closebutton" class="btn btn-secondary" data-bs-dismiss="modal" (click)="resetOnClose()">Close</button>
-                <button type="button"  class="btn btn-primary" [disabled]="!formValue.valid" (click)="onUpdateEmployee()"> Update</button>
+                <button type="button" id="closebutton" class="btn btn-secondary" data-bs-dismiss="modal"
+                    (click)="resetOnClose()">Close</button>
+                <button type="button" class="btn btn-primary" [disabled]="!formValue.valid"
+                    (click)="onUpdateEmployee()"> Update</button>
             </div>
         </div>
     </div>
@@ -138,16 +141,16 @@
 
 <!-- file upload  form -->
 <form (ngSubmit)="onFileSubmit($event)" [formGroup]="uploadForm">
-    <div class="mb-3"
-    >
-    <input type="hidden" name="emp_id"  formControlName = "emp_id">
-      <label for="FileUpload" class="form-label">Upload Your Reports</label>
-      <input type="file" class="form-control" id="file" name="file" [multiple]="false"  aria-describedby="FileUpload" [accept]="['.xls','.pdf','.jpg','.jpeg','.doc','.docx']" (change)="onFileSelect($event)">
-      <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
+    <div class="mb-3">
+        <input type="hidden" name="emp_id" formControlName="emp_id">
+        <label for="FileUpload" class="form-label">Upload Your Reports</label>
+        <input type="file" class="form-control" id="file" name="file" [multiple]="false" aria-describedby="FileUpload"
+            [accept]="['.xls','.pdf','.jpg','.jpeg','.doc','.docx']" (change)="onFileSelect($event)">
+        <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
     </div>
-    <button  class="btn btn-primary" type="submit">Upload</button>
-  </form>
-  <table class="table mt-3">
+    <button class="btn btn-primary" type="submit">Upload</button>
+</form>
+<table class="table mt-3">
     <thead>
         <th>
             file_id
@@ -157,12 +160,15 @@
         <th>operations</th>
 
     </thead>
-    <tbody >
-        <tr *ngFor = "let row of (userFiles$ | async) ">
+    <tbody>
+        <tr *ngFor="let row of (userFiles$ | async) ">
             <td>{{row.file_id}}</td>
             <td>{{row.originalname}}</td>
             <td>{{row.type}}</td>
             <td>
+                <div class="custom-grid">
+                    <button class="btn btn-primary" (click)="getUserDownloadableFile(row)"> view</button> <button class="btn btn-warning">Change</button>
+                    <button class="btn btn-danger">Delete</button></div>
             
             </td>
         </tr>

@@ -32,7 +32,7 @@ UploadedFiles.post("/files", upload.single("file"), (req, res) => {
         `INSERT INTO employee_files (type,location,size,originalname,filename,emp_id) VALUES ('${file.mimetype}', '${file.path}', ${file.size}, '${file.originalname}', '${file.filename}', '${emp_id}') `
       )
       .then(([rows, fields]) => {
-        console.log(rows);
+        // console.log(rows);
         res.status(200).json({ fileUploaded: true, rows });
       })
       .catch((err) => {
@@ -52,7 +52,7 @@ UploadedFiles.get("/files/:emp_id", (req, res) => {
       .promise()
       .query(`SELECT * FROM employee_files WHERE emp_id = '${emp_id}'`)
       .then(([rows, fields]) => {
-        console.log(rows)
+        // console.log(rows)
         res.status(200).send(rows)
       }).catch(err=>{
         res.status(200).json({error:"something went wrong"})
@@ -62,5 +62,21 @@ UploadedFiles.get("/files/:emp_id", (req, res) => {
     res.status(200).send({error:"Bad Request"})
   }
 });
+UploadedFiles.get("/files/:emp_id/:file_id",(req,res)=>{
+  if(req?.session?.email){
+    const {emp_id , file_id} = req.params
+    connection.promise().query(`SELECT location FROM employee_files WHERE emp_id = '${emp_id}' AND file_id = '${file_id}'`).then(([rows,fields])=>{
+      console.log(rows,fields)
+      const filePath = rows[0].location
+      res.status(200).download(filePath)
+    }).catch(err =>{
+      console.log(err)
+      res.status(200).send({error:"database error check server console"})
+    })
+  }
+  else{
+    res.status(200).send({badRequest:true})
+  }
+})
 
 module.exports = UploadedFiles;
