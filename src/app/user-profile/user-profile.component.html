@@ -1,4 +1,7 @@
-<div class="container">
+<div class="container paymentbox">
+    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#paymentForm">Pay Up</button>
+</div>
+<div class="container custom-cont">
     <div class="title">
         <h3 class="label">First name:</h3>
         <h4 class="info">{{user.firstname}}</h4>
@@ -175,7 +178,7 @@
     </div>
 </div>
 
-<table class="table mt-3">
+<table class="table mt-3" *ngIf="(userFiles$ | async).length !== 0; else elseBlock">
     <thead>
         <th>
             file_id
@@ -200,3 +203,30 @@
         </tr>
     </tbody>
   </table>
+  <div class="modal" id="paymentForm" >
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4>Payment form</h4>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="paymentForm" >
+                    <label for="amount" class="form-label">Amount:</label>
+                    <input type="number" name="amount" formControlName="amount" (change)="onAmountChange()" (keydown)="onAmountChange()"  class="form-control">
+                </form>
+                <div class="custom-cont">
+                    <button class="btn btn-danger" data-bs-dismiss="modal">
+                        Close
+                    </button>
+                    <button class="btn btn-info" (click)="pay()">Pay</button>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+  <ng-template  #elseBlock>
+
+      <div>
+        <h3>You have no files uploaded</h3>
+      </div>
+  </ng-template>

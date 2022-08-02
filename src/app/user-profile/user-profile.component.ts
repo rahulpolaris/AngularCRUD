@@ -16,6 +16,7 @@ import { CscapiService } from '../shared/Services/cscapi.service';
 import { FileTransferService } from '../shared/Services/file-transfer.service';
 import { Observable } from 'rxjs';
 import fileSaver from 'file-saver'
+import { PaymentHandlerService } from '../shared/Services/payment-handler.service';
 const { saveAs } = fileSaver
 
 
@@ -31,6 +32,7 @@ export class UserProfileComponent implements OnInit {
   user: EmployeeModel = new EmployeeModel();
   formValue!: FormGroup;
   uploadForm!: FormGroup;
+  paymentForm!: FormGroup;
   updateUploadForm!: FormGroup;
   fileToBeUpdated!: any
 
@@ -49,7 +51,7 @@ export class UserProfileComponent implements OnInit {
     age: boolean;
     phone: boolean;
   };
-
+  
   constructor(
     private activeRoute: ActivatedRoute,
     private router: Router,
@@ -57,7 +59,8 @@ export class UserProfileComponent implements OnInit {
     private formbuilder: FormBuilder,
     private api: ApiService,
     private cscapi: CscapiService,
-    private filetransfer: FileTransferService
+    private filetransfer: FileTransferService,
+    private paymentHandler: PaymentHandlerService
   ) {}
 
   ngOnInit(): void {
@@ -93,6 +96,9 @@ export class UserProfileComponent implements OnInit {
     });
    this.updateUploadForm = this.formbuilder.group({
     file:['']
+   })
+   this.paymentForm = this.formbuilder.group({
+    amount:['']
    })
     
 
@@ -188,6 +194,16 @@ export class UserProfileComponent implements OnInit {
     let StateObjIsoCode = this.formValue.controls['statename'].value.id;
     console.log('State id is: ', StateObjIsoCode);
     this.getCities(StateObjIsoCode);
+  }
+  onAmountChange(){
+    // console.log("inside amount change")
+    if(parseInt(this.paymentForm.controls['amount'].value) < 0 ){
+      const val = this.paymentForm.controls['amount'].value.toString()
+      const newVal = parseInt(val.slice(1))
+      // const newVal = "23"
+      this.paymentForm.controls['amount'].setValue(newVal)
+      console.log(val)
+    }
   }
 
   onEmailBlur(): void {
@@ -337,7 +353,37 @@ export class UserProfileComponent implements OnInit {
         this.getUserDetails();
       });
   }
+ pay(){
+  console.log("inside Pay method")
+  let options ={
+    "key": "rzp_live_OhgQOzSc7Kc9V2", 
+    "amount": "50000", 
+    "currency": "INR",
+    "name": "Acme Corp",
+    "description": "Test Transaction",
+    "image": "https://example.com/your_logo",
+    "order_id": "", 
+    "handler": function (response:any){
+        alert(response.razorpay_payment_id);
+        alert(response.razorpay_order_id);
+        alert(response.razorpay_signature)
+    },
+    "prefill": {
+        "name": this.user.firstname + " " + this.user.lastname,
+        "email": this.user.email,
+        "contact": this.user.phone
+    },
+    "notes": {
+        "address": "Razorpay Corporate Office"
+    },
+    "theme": {
+        "color": "#3399cc"
+    }
+};
 
+const rzp1 = this.paymentHandler.nativeWindow.Razorpay(options)
+rzp1.open()
+ }
 
   private customDobValidation(controlDobName: string): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {

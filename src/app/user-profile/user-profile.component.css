@@ -1,7 +1,8 @@
-.container {
+.custom-cont {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: auto;
+  margin: 10px auto;
 }
 .desc,
 .title {
@@ -41,4 +42,8 @@ thead {
 }
 th {
   padding: 20px 0;
+}
+.paymentbox{
+  text-align: center;
+  margin-top: 30px;
 }
