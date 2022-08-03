@@ -17,5 +17,10 @@ get nativeWindow():any{
   return _window()
 }
 
-
+generateOrder(amount:number){
+  return this.http.post("http://localhost:5000/generateOrder",{amount},{withCredentials:true})
+}
+verifyPayment(data:any){
+  return this.http.post("http://localhost:5000/verifyPayment",data,{withCredentials:true})
+}
 }

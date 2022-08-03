@@ -41,3 +41,4 @@ server/resources/file_storage/**
 # System files
 .DS_Store
 Thumbs.db
+.env

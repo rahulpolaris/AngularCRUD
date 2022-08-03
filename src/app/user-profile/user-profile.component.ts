@@ -38,8 +38,10 @@ export class UserProfileComponent implements OnInit {
 
   employeeModelObj: EmployeeModel = new EmployeeModel();
   userFiles$ !: Observable<any>
-
+  generatedOrder$ !: Observable<any>
+  paymentVerifyObj$!: Observable<any>
   countries!: any;
+  options!:any;
 
   states!: any[];
 
@@ -353,36 +355,58 @@ export class UserProfileComponent implements OnInit {
         this.getUserDetails();
       });
   }
+
  pay(){
   console.log("inside Pay method")
-  let options ={
-    "key": "rzp_live_OhgQOzSc7Kc9V2", 
-    "amount": "50000", 
-    "currency": "INR",
-    "name": "Acme Corp",
-    "description": "Test Transaction",
-    "image": "https://example.com/your_logo",
-    "order_id": "", 
-    "handler": function (response:any){
-        alert(response.razorpay_payment_id);
-        alert(response.razorpay_order_id);
-        alert(response.razorpay_signature)
-    },
-    "prefill": {
-        "name": this.user.firstname + " " + this.user.lastname,
-        "email": this.user.email,
-        "contact": this.user.phone
-    },
-    "notes": {
-        "address": "Razorpay Corporate Office"
-    },
-    "theme": {
-        "color": "#3399cc"
-    }
-};
+  this.generatedOrder$ = this.paymentHandler.generateOrder( this.paymentForm.controls['amount'].value)
+  this.generatedOrder$.subscribe((res:any)=>{
+    // console.log(res)
+    this.options ={
+      "key": "rzp_test_lyDeFWJSKtRZHA", 
+      "amount":this.paymentForm.controls['amount'].value.toString()+"00", 
+      "currency": "INR",
+      "name": "Acme Corp",
+      "description": "Test Transaction",
+      "image": "https://example.com/your_logo",
+      "order_id": res.id, 
+      "handler": function (response:any){
+        console.log(response)
+          // alert(response.razorpay_payment_id);
+          // alert(response.razorpay_order_id);
+          // alert(response.razorpay_signature)
+          this.paymentVerifyObj$ = this.paymentHandler.verifyPayment({razorpay_payment_id:response.razorpay_payment_id,
+            razorpay_order_id:response.razorpay_order_id, razorpay_signature:response.razorpay_signature}).subscribe((Res:any)=>{
+              console.log(Res)
+              if(Res?.paymentSuccessful){
+                alert("payment successful")
+              }
+              else{
+                alert("payment unsuccessful")
+              }
+            })
+          
 
-const rzp1 = this.paymentHandler.nativeWindow.Razorpay(options)
-rzp1.open()
+          
+      
+          
+      },
+      "prefill": {
+          "name": this.user.firstname + " " + this.user.lastname ,
+          "email": this.user.email,
+          "contact": this.user.phone
+      },
+      "notes": {
+          "address": "Razorpay Corporate Office"
+      },
+      "theme": {
+          "color": "#3399cc"
+      }
+  };
+  
+  const rzp1 = this.paymentHandler.nativeWindow.Razorpay(this.options)
+  rzp1.open()
+  
+  })
  }
 
   private customDobValidation(controlDobName: string): ValidatorFn {

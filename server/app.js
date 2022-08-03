@@ -1,8 +1,13 @@
+require('dotenv').config()
+// const sha256 = require('hash.js/lib/hash/sha/256')
+// const hmacSha256 = require('crypto-js/hmac-sha256')
+// const base64 = require('crypto-js/enc-base64')
+
 const express = require("express");
 const app = express();
 const path = require("path");
 const PORT = process.env.PORT || 5000
-const { v4: uuidv4 } = require('uuid');
+const { v4: uuidv4 } = require('uuid');                                                                                                                                                 
 const cookieParser = require("cookie-parser");
 const session = require('express-session')
 const MySQLStore = require('express-mysql-session')(session)
@@ -49,6 +54,8 @@ const SortedEmployees = require("./routes/Employees/sortedEmployees");
 const FilteredEmployees = require("./routes/Employees/filteredEmployees");
 const User = require("./routes/Employees/user");
 const UploadedFiles = require("./routes/Employees/uploadFiles")
+const Payment = require("./routes/Employees/Payment");
+// const { sha } = require('hash.js');
 
 let whitelist = ['http://localhost:4200','http://localhost:80','http://localhost:5000'];
         let corsOptions = {
@@ -78,6 +85,7 @@ app.use("/",SortedEmployees)
 app.use("/",FilteredEmployees)
 app.use("/",User)
 app.use("/",UploadedFiles)
+app.use("/",Payment)
 
 app.listen(PORT, async () => {
     console.log("listening on port:" +  PORT+ "-----------------------------------------------------");

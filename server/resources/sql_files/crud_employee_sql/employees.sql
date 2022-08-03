@@ -55,3 +55,13 @@ CREATE TABLE IF NOT EXISTS employee_files(
 
     
 );
+
+CREATE TABLE IF NOT EXISTS payments(
+    payment_id INT unsigned NOT NULL AUTO_INCREMENT,
+    razorpay_payment_id VARCHAR(250) NOT NULL,
+    razorpay_order_id VARCHAR(250) NOT NULL,
+    razorpay_signature TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+
+);
