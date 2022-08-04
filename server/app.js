@@ -1,6 +1,6 @@
 require('dotenv').config()
 // const sha256 = require('hash.js/lib/hash/sha/256')
-// const hmacSha256 = require('crypto-js/hmac-sha256')
+const hmacSha256 = require('crypto-js/hmac-sha256')
 // const base64 = require('crypto-js/enc-base64')
 
 const express = require("express");

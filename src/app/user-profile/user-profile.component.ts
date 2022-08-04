@@ -17,6 +17,7 @@ import { FileTransferService } from '../shared/Services/file-transfer.service';
 import { Observable } from 'rxjs';
 import fileSaver from 'file-saver'
 import { PaymentHandlerService } from '../shared/Services/payment-handler.service';
+import { ThisReceiver } from '@angular/compiler';
 const { saveAs } = fileSaver
 
 
@@ -362,34 +363,16 @@ export class UserProfileComponent implements OnInit {
   this.generatedOrder$.subscribe((res:any)=>{
     // console.log(res)
     this.options ={
-      "key": "rzp_test_lyDeFWJSKtRZHA", 
-      "amount":this.paymentForm.controls['amount'].value.toString()+"00", 
+      "key": "rzp_live_OhgQOzSc7Kc9V2", 
+      "amount":this.paymentForm.controls['amount'].value.toString()+"00" ,
       "currency": "INR",
       "name": "Acme Corp",
       "description": "Test Transaction",
       "image": "https://example.com/your_logo",
       "order_id": res.id, 
-      "handler": function (response:any){
-        console.log(response)
-          alert(response.razorpay_payment_id);
-          alert(response.razorpay_order_id);
-          alert(response.razorpay_signature)
-          // this.paymentVerifyObj$ = this.paymentHandler.verifyPayment({razorpay_payment_id:response.razorpay_payment_id,
-          //   razorpay_order_id:response.razorpay_order_id, razorpay_signature:response.razorpay_signature}).subscribe((Res:any)=>{
-          //     console.log(Res)
-          //     if(Res?.paymentSuccessful){
-          //       alert("payment successful")
-          //     }
-          //     else{
-          //       alert("payment unsuccessful")
-          //     }
-          //   })
+      "handler": this.paymentCapture.bind(this)
           
-
-          
-      
-          
-      },
+,
       "prefill": {
           "name": this.user.firstname + " " + this.user.lastname ,
           "email": this.user.email,
@@ -408,6 +391,41 @@ export class UserProfileComponent implements OnInit {
   
   })
  }
+ paymentCapture(response:any){
+        
+        console.log(response)
+          alert(response.razorpay_payment_id);
+          alert(response.razorpay_order_id);
+          alert(response.razorpay_signature)
+          
+          // this.paymentVerifyObj$ = this.paymentHandler.verifyPayment({razorpay_payment_id:response.razorpay_payment_id,
+          //   razorpay_order_id:response.razorpay_order_id, razorpay_signature:response.razorpay_signature}).subscribe((Res:any)=>{
+          //     console.log(Res)
+              // if(Res?.paymentSuccessful){
+              //   alert("payment successful")
+              // }
+              // else{
+              //   alert("payment unsuccessful")
+              // }
+            // })
+          this.paymentVerifyObj$ = this.paymentHandler.verifyPayment(response)
+          this.paymentVerifyObj$.subscribe((Res:any)=>{
+            console.log(Res)
+            if(Res?.paymentSuccessful){
+              alert("payment successful")
+            }
+            else{
+              alert("payment unsuccessful")
+            }
+
+
+          })
+          // console.log(this.paymentVerifyObj$ , "here is payment verify object")
+            
+          }
+
+
+ 
 
   private customDobValidation(controlDobName: string): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {

@@ -22,8 +22,8 @@ if(typeof(amount)==='string'){
    amount =  parseInt(amount)
 }
 let instance = new Razorpay({
-  key_id: process.env.TEST_KEY_ID,
-  key_secret: process.env.TEST_KEY_SECRET,
+  key_id: process.env.LIVE_KEY_ID,
+  key_secret: process.env.LIVE_KEY_SECRET,
 })
 const genratedOrder = instance.orders.create({
     "amount": amount*100,
@@ -40,24 +40,24 @@ const genratedOrder = instance.orders.create({
   }).catch(err => {
     res.send(err)
   })
-//   console.log(genratedOrder)
-//   res.send("hello")
 })
 
 Payment.post("/verifyPayment",(req,res)=>{
+  console.log("Hitting verify payment route..>")
     console.log(req.body)
     const {razorpay_payment_id, razorpay_order_id, razorpay_signature} = req.body
-    const generatedSignature = hmacSha256(razorpay_payment_id+'|'+razorpay_order_id,process.env.TEST_KEY_SECRET).toString()
+    const generatedSignature = hmacSha256(razorpay_order_id+'|'+razorpay_payment_id,process.env.LIVE_KEY_SECRET).toString()
     if(razorpay_signature === generatedSignature){
         // res.send({paymentSuccessful:true})
         connection
         .promise()
-        .query(`INSERT into payments (razorpay_payment_id, razorpay_order_id, razorpay_signature) VALUES ('${razorpay_payment_id}',${ razorpay_order_id},${razorpay_signature})`)
+        .query(`INSERT into payments (razorpay_payment_id, razorpay_order_id, razorpay_signature) VALUES ('${razorpay_payment_id}', '${ razorpay_order_id}','${razorpay_signature}')`)
         .then(([rows,fields])=>{
         //   console.log(rows)
         res.send({paymentSuccessful:true,rows})
         })
         .catch(err => {
+          console.log(err)
             res.status(err.code).send({error:err})
         })
 
