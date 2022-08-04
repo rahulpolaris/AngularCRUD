@@ -371,19 +371,19 @@ export class UserProfileComponent implements OnInit {
       "order_id": res.id, 
       "handler": function (response:any){
         console.log(response)
-          // alert(response.razorpay_payment_id);
-          // alert(response.razorpay_order_id);
-          // alert(response.razorpay_signature)
-          this.paymentVerifyObj$ = this.paymentHandler.verifyPayment({razorpay_payment_id:response.razorpay_payment_id,
-            razorpay_order_id:response.razorpay_order_id, razorpay_signature:response.razorpay_signature}).subscribe((Res:any)=>{
-              console.log(Res)
-              if(Res?.paymentSuccessful){
-                alert("payment successful")
-              }
-              else{
-                alert("payment unsuccessful")
-              }
-            })
+          alert(response.razorpay_payment_id);
+          alert(response.razorpay_order_id);
+          alert(response.razorpay_signature)
+          // this.paymentVerifyObj$ = this.paymentHandler.verifyPayment({razorpay_payment_id:response.razorpay_payment_id,
+          //   razorpay_order_id:response.razorpay_order_id, razorpay_signature:response.razorpay_signature}).subscribe((Res:any)=>{
+          //     console.log(Res)
+          //     if(Res?.paymentSuccessful){
+          //       alert("payment successful")
+          //     }
+          //     else{
+          //       alert("payment unsuccessful")
+          //     }
+          //   })
           
 
           

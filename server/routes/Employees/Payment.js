@@ -22,8 +22,8 @@ if(typeof(amount)==='string'){
    amount =  parseInt(amount)
 }
 let instance = new Razorpay({
-  key_id: process.env.KEY_ID,
-  key_secret: process.env.KEY_SECRET,
+  key_id: process.env.TEST_KEY_ID,
+  key_secret: process.env.TEST_KEY_SECRET,
 })
 const genratedOrder = instance.orders.create({
     "amount": amount*100,
@@ -47,7 +47,7 @@ const genratedOrder = instance.orders.create({
 Payment.post("/verifyPayment",(req,res)=>{
     console.log(req.body)
     const {razorpay_payment_id, razorpay_order_id, razorpay_signature} = req.body
-    const generatedSignature = hmacSha256(razorpay_payment_id+'|'+razorpay_order_id,process.env.KEY_SECRET).toString()
+    const generatedSignature = hmacSha256(razorpay_payment_id+'|'+razorpay_order_id,process.env.TEST_KEY_SECRET).toString()
     if(razorpay_signature === generatedSignature){
         // res.send({paymentSuccessful:true})
         connection
